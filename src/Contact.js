@@ -6,9 +6,12 @@ import './App.css';
 const Contact = () => {
   return (
     <div className='card'>
-        <Card title="Contact" style={{ width: 300}}>
-         <p>Card content</p>
-        </Card>
+      <Card
+        title="Contact"
+        style={{ width: 300}}
+      >
+        <p>Card content</p>
+      </Card>
     </div>
   );
 }

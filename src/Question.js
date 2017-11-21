@@ -5,13 +5,14 @@ import Choice from './Choice.js';
 const Question = ({title, choices, onClick}) => {
   return (
     <Card title={title}>
-      {choices.map(choice => (
-      <p>
-        <Choice choice={choice} onClick={onClick}/>
-      </p>
-    ))}
+      {choices.map(choice =>
+        <Choice
+          key={'choice'}
+          choice={choice}
+          onClick={onClick}
+        />
+      )}
     </Card>
-
   )
 }
 

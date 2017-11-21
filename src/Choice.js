@@ -4,7 +4,10 @@ const RadioButton = Radio.Button;
 
 const Choice = ({choice, onClick}) => {
   return (
-    <RadioButton onClick={()=>onClick(choice)}>
+    <RadioButton
+      style={{display:'block'}}
+      onClick={()=>onClick(choice)}
+    >
       {choice}
     </RadioButton>
   )

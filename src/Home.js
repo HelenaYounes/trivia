@@ -7,7 +7,10 @@ class Home extends Component {
   render() {
     return (
     <div className='card'>
-        <Card title="Card title" style={{ width: 300}}>
+        <Card
+          title="Card title"
+          style={{ width: 300}}
+        >
          <p>Card content</p>
         </Card>
     </div>
