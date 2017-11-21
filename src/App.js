@@ -3,9 +3,9 @@ import { Button, Card, Icon, Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import { Router, Route, Switch  } from 'react-router';
 import { SocialIcon } from 'react-social-icons';
-import Home from './Home.js'
-import Contact from './Contact.js'
-import Question from './Question.js'
+import Home from './Home.js';
+import Contact from './Contact.js';
+import Quiz from './Quiz.js';
 import 'antd/dist/antd.css';
 import './App.css';
 const { Header, Content, Footer } = Layout;
@@ -43,9 +43,9 @@ class App extends Component {
         <Content>
           <Router>
             <Switch>
+              <Route exact path='/' component={Home} />
               <Route exact path='/contact' component={Contact} />
-              <Route exact path='/question/:id' component={Question} />
-              <Route path='/' component={Home} />
+              <Route exact path='/question/:id' component={Quiz} />
             </Switch>
           </Router>
         </Content>
