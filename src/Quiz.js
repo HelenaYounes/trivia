@@ -19,14 +19,19 @@ const questions = [
     answer: 'Brazilia'
   },
 ];
-
+const check = (choice, answer) => {
+  const winningMsg = choice === answer? 'yes': 'no'
+  return alert(winningMsg);
+}
 const Quiz = ({match}) => {
   const index = match.params.id;
   const question = questions[index];
   const title = question.title;
   const choices = question.choices;
+  const answer = question.answer;
+
   return (
-    <Question title={title} choices={choices}/>
+    <Question title={title} choices={choices} onClick={(choice) => check(choice, answer)}/>
   )
 }
 

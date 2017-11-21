@@ -2,10 +2,10 @@ import React from 'react';
 import { Radio } from 'antd';
 const RadioButton = Radio.Button;
 
-const Choice = (props) => {
+const Choice = ({choice, onClick}) => {
   return (
-    <RadioButton>
-      {props.choice}
+    <RadioButton onClick={()=>onClick(choice)}>
+      {choice}
     </RadioButton>
   )
 }

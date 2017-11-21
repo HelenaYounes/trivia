@@ -2,12 +2,12 @@ import React from 'react';
 import { Card } from 'antd';
 import Choice from './Choice.js';
 
-const Question = (props) => {
+const Question = ({title, choices, onClick}) => {
   return (
-    <Card title={props.title}>
-      {props.choices.map(choice => (
+    <Card title={title}>
+      {choices.map(choice => (
       <p>
-        <Choice choice={choice}/>
+        <Choice choice={choice} onClick={onClick}/>
       </p>
     ))}
     </Card>
