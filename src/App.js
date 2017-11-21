@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
 import Home from './Home.js'
 import Contact from './Contact.js'
+import Question from './Question.js'
 import 'antd/dist/antd.css';
 import './App.css';
 const { Header, Content, Footer } = Layout;
@@ -42,12 +43,9 @@ class App extends Component {
         <Content>
           <Router>
             <Switch>
-              <Route path='/' component={Home} />
-            </Switch>
-          </Router>
-          <Router>
-            <Switch>
               <Route exact path='/contact' component={Contact} />
+              <Route exact path='/question/:id' component={Question} />
+              <Route path='/' component={Home} />
             </Switch>
           </Router>
         </Content>
