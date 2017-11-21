@@ -5,16 +5,11 @@ import cheeseQuiz from './CheeseQuiz';
 const quizzes = [
   capitalQuiz,cheeseQuiz
 ]
-const Quizzes = ({ match })=>{
+const Quizzes = ({ match, children })=>{
+  debugger;
   const index = match.params.quizId;
-  const questionIndex = match.params.questionId;
   const quiz = quizzes[index];
-  return (
-    <Quiz
-      quiz={quiz}
-      questionIndex={questionIndex}
-    />
-  );
+  return children;
 }
 
 export default Quizzes;

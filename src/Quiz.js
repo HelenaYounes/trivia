@@ -5,7 +5,9 @@ const check = (choice, answer) => {
   const winningMsg = choice === answer? 'yes': 'no'
   return alert(winningMsg);
 }
-const Quiz = ({quiz, questionIndex}) => {
+const Quiz = ({quiz, match}) => {
+  debugger;
+  const questionIndex = match.params.questionId;
   const question = quiz[questionIndex];
   const title = question.title;
   const choices = question.choices;
