@@ -6,7 +6,6 @@ const check = (choice, answer) => {
   return alert(winningMsg);
 }
 const Quiz = ({quiz, match}) => {
-  debugger;
   const questionIndex = match.params.questionId;
   const question = quiz[questionIndex];
   const title = question.title;

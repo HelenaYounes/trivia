@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Card, Icon, Layout, Menu } from 'antd';
+import { Button, Icon, Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-// import { Router, Route, Switch  } from 'react-router';
 import { SocialIcon } from 'react-social-icons';
 import Home from './Home.js';
 import Contact from './Contact.js';
-import Quiz from './Quiz.js';
 import Quizzes from './Quizzes.js';
 import 'antd/dist/antd.css';
 import './App.css';
-const { Header, Content, Footer } = Layout;
-const SubMenu = Menu.SubMenu;
+const { Header, Content } = Layout;
 
 class App extends Component {
   render() {
@@ -25,7 +22,7 @@ class App extends Component {
               <Menu
                 mode="inline"
                 theme="dark"
-                inlineCollapsed='false'
+                inlineCollapsed={false}
               >
                 <Menu.Item key="1">
                   <span>Contact</span>
@@ -46,9 +43,7 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/contact' component={Contact} />
-              <Route exact path='/quiz/:quizId' component={Quizzes}>
-                <Route exact path='/question/:questionId' component={Quiz} />
-              </Route>
+              <Route path='/quiz/:quizId' component={Quizzes}/>
             </Switch>
           </Router>
         </Content>
