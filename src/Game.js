@@ -8,15 +8,14 @@ class Game extends Component {
     super(props)
     this.state={
       streakBar: 0,
-      progressBar: [],
+      // progressBar: [true, false],
       // result: false
     }
   }
 
   checkAnswer(choice, answer) {
-    const currentProgressBar = this.state.progressBar;
 
-    choice===answer? this.updateStreakBar() && currentProgressBar.push(true):this.resetStreakBar() && currentProgressBar.push(false);
+    choice===answer? this.updateStreakBar():this.resetStreakBar();
 
   }
   resetStreakBar(){
@@ -25,9 +24,14 @@ class Game extends Component {
   updateStreakBar(){
     this.setState(({streakBar})=>({streakBar: this.state.streakBar +1 }));
   }
+  // ProgBar(){
+  //   const currentProgressBar = this.state.progressBar;
+  //   currentProgressBar.push(true)
+  //   this.setState(({progressBar})=>({progressBar: currentProgressBar}));
+  // }
   render() {
     return (
-      <Home onCardClick={(choice, answer)=>this.checkAnswer(choice, answer)} value={this.state.streakBar} progressBar={this.state.progressBar} />
+      <Home onCardClick={(choice, answer)=>this.checkAnswer(choice, answer)} value={this.state.streakBar}  />
     );
   }
 }

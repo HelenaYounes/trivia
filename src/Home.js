@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Card, Input, Progress, Radio, Rate } from 'antd';
-import allQuizes from './allQuizes';
+import allQuizes from './allQuizes.js';
 import 'antd/dist/antd.css';
 import './App.css';
 
+const Search = Input.Search;
+
 class Home extends Component {
   render() {
-    const {onCardClick, progressBar, value} = this.props;
+    const {onCardClick, value} = this.props;
     const quizList = allQuizes;
     return (
       <div className='home'>
@@ -23,14 +25,10 @@ class Home extends Component {
                   key={index}
                   title={question}
                 >
-                { choices.map((choice)=> { return <Radio className='quizChoices' onClick={()=>
-                  onCardClick(choice, answer)}>{choice}</Radio>})}
+                { choices.map((choice)=> { return <Radio className='quizChoices' onClick={()=>onCardClick(choice, answer)}>{choice}</Radio>})}
                 </Card>)
               }
             )}
-          </div>
-          <div className="progress-bar">
-            {progressBar.map((result)=>(<Progress type="circle" percent={100}/>))}
           </div>
           <Rate value={value}/>
         </div>
