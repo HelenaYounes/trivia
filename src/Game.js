@@ -24,17 +24,20 @@ class Game extends Component {
 
   }
   resetStreakBar(){
+    const currentProgressBar = this.state.progressBar;
     this.setState(({streakBar})=>({streakBar: 0}));
+    currentProgressBar.push(false)
+    this.setState(({progressBar})=>({progressBar: currentProgressBar}));
   }
   updateStreakBar(){
     this.setState(({streakBar})=>({streakBar: this.state.streakBar +1 }));
   }
 
   updateProgressBar(){
-    debugger;
     const currentProgressBar = this.state.progressBar;
     currentProgressBar.push(true)
     this.setState(({progressBar})=>({progressBar: currentProgressBar}));
+    this.updateStreakBar();
   }
   render() {
     return (

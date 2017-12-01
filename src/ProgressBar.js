@@ -5,7 +5,7 @@ class ProgressBar extends Component {
     const {results}=this.props;
     return(
       results.map((result)=>{
-        return <Progress type="circle" percent={100} width={15}/>
+         return result? <Progress type="circle" percent={100} width={15}/>:<Progress type="circle" percent={100} width={15} status="exception"/>
       })
     );
   }
