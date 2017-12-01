@@ -4,8 +4,8 @@ class ProgressBar extends Component {
   render(){
     const {results}=this.props;
     return(
-      results.map((result)=>{
-         return result? <Progress type="circle" percent={100} width={15}/>:<Progress type="circle" percent={100} width={15} status="exception"/>
+      results.map((correct)=>{
+        return  <Progress type="circle" percent={100} width={15} status={correct? "success":"exception"} />
       })
     );
   }

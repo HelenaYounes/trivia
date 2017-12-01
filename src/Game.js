@@ -12,7 +12,7 @@ class Game extends Component {
     super(props)
     this.state={
       streakBar: 0,
-      progressBar: [true],
+      progressBar: [],
       // result: false
     }
   }
