@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Icon, Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
-import Home from './Home.js';
+import Game from './Game.js';
 import Contact from './Contact.js';
 import Quizzes from './Quizzes.js';
 import 'antd/dist/antd.css';
@@ -24,9 +24,6 @@ class App extends Component {
                 theme="dark"
                 inlineCollapsed={false}
               >
-                <Menu.Item key="1">
-                  <span>Contact</span>
-                </Menu.Item>
               </Menu>
             </div>
             <h1 className="App-title" style={{color:'white'}}>Some Title</h1>
@@ -41,7 +38,7 @@ class App extends Component {
         <Content>
           <Router>
             <Switch>
-              <Route exact path='/' component={Home} />
+              <Route exact path='/' component={Game} />
               <Route exact path='/contact' component={Contact} />
               <Route path='/quiz/:quizId' component={Quizzes}/>
             </Switch>
