@@ -18,8 +18,9 @@ class Game extends Component {
   }
 
   checkAnswer(choice, answer) {
+    const results = this.state.progressBar;
 
-    choice===answer? this.updateStreakBar():this.resetStreakBar();
+    choice===answer? this.updateProgressBar():this.resetStreakBar();
 
   }
   resetStreakBar(){
@@ -28,12 +29,13 @@ class Game extends Component {
   updateStreakBar(){
     this.setState(({streakBar})=>({streakBar: this.state.streakBar +1 }));
   }
-  
-  // ProgBar(){
-  //   const currentProgressBar = this.state.progressBar;
-  //   currentProgressBar.push(true)
-  //   this.setState(({progressBar})=>({progressBar: currentProgressBar}));
-  // }
+
+  updateProgressBar(){
+    debugger;
+    const currentProgressBar = this.state.progressBar;
+    currentProgressBar.push(true)
+    this.setState(({progressBar})=>({progressBar: currentProgressBar}));
+  }
   render() {
     return (
     <div>
