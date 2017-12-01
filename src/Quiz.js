@@ -7,10 +7,12 @@ const check = (choice, answer) => {
 }
 const Quiz = ({quiz, match}) => {
   const questionIndex = match.params.questionId;
-  const question = quiz[questionIndex];
+  // debugger;
+  const question = quiz.questions[questionIndex];
   const title = question.title;
   const choices = question.choices;
   const answer = question.answer;
+
 
   return (
     <Question

@@ -3,7 +3,7 @@ import { Button, Icon, Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
 import Game from './Game.js';
-import Contact from './Contact.js';
+import QuizesList from './QuizesList.js';
 import Quizzes from './Quizzes.js';
 import 'antd/dist/antd.css';
 import './App.css';
@@ -39,7 +39,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path='/' component={Game} />
-              <Route exact path='/contact' component={Contact} />
+              <Route exact path='/quiz' component={QuizesList} />
               <Route path='/quiz/:quizId' component={Quizzes}/>
             </Switch>
           </Router>
