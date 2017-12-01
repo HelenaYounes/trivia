@@ -24,9 +24,6 @@ class App extends Component {
                 theme="dark"
                 inlineCollapsed={false}
               >
-                <Menu.Item key="1">
-                  <span>Contact</span>
-                </Menu.Item>
               </Menu>
             </div>
             <h1 className="App-title" style={{color:'white'}}>Some Title</h1>
