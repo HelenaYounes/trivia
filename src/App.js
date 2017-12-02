@@ -39,8 +39,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path='/' component={Game} />
-              <Route exact path='/quiz' component={QuizesList} />
-              <Route path='/quiz/:quizId' component={Quizzes}/>
+              <Route path='/quiz' component={QuizesList} />
             </Switch>
           </Router>
         </Content>
