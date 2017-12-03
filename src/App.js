@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Icon, Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
-import Game from './Game.js';
 import QuizesList from './QuizesList.js';
 import Quizzes from './Quizzes.js';
 import 'antd/dist/antd.css';
@@ -26,7 +25,7 @@ class App extends Component {
               >
               </Menu>
             </div>
-            <h1 className="App-title" style={{color:'white'}}>Some Title</h1>
+            <h1 className="App-title" style={{color:'white'}}>Trivia</h1>
             <div className="social-media-icons">
               <SocialIcon url="http://twitter.com"/>
               <SocialIcon url="http://facebook.com"/>
@@ -38,7 +37,7 @@ class App extends Component {
         <Content>
           <Router>
             <Switch>
-              <Route exact path='/' component={Game} />
+              <Route exact path='/' component={QuizesList} />
               <Route path='/quiz' component={QuizesList} />
             </Switch>
           </Router>
