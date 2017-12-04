@@ -12,10 +12,11 @@ const { Header, Content } = Layout;
 class App extends Component {
   render() {
     return (
+      <Router>
       <Layout>
         <Header>
           <div className='App-header'>
-
+            <CategoryList />
             <h1 className="App-title" style={{color:'white'}}>Trivia</h1>
             <div className="social-media-icons">
               <SocialIcon url="http://twitter.com"/>
@@ -25,16 +26,14 @@ class App extends Component {
           </div>
         </Header>
         <Content>
-          <Router>
             <div>
-              <CategoryList />
               <Switch>
                 <Route path='/quiz/:id' component={Quizzes} />
               </Switch>
             </div>
-          </Router>
         </Content>
       </Layout>
+    </Router>
     );
   }
 }
