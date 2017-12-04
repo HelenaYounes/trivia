@@ -5,12 +5,11 @@ const check = (choice, answer) => {
   const winningMsg = choice === answer? 'yes': 'no'
   return alert(winningMsg);
 }
-const Quiz = ({quiz, match}) => {
-  const questionIndex = match.params.questionId;
-  const question = quiz[questionIndex];
-  const title = question.title;
-  const choices = question.choices;
-  const answer = question.answer;
+const Quiz = ({quiz}) => {
+  const title = quiz.question;
+  const choices = quiz.incorrect_answers.concat(quiz.correct_answer);
+  const answer = quiz.correct_answer;
+
 
   return (
     <Question

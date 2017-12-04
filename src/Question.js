@@ -5,9 +5,9 @@ import Choice from './Choice.js';
 const Question = ({title, choices, onClick}) => {
   return (
     <Card title={title}>
-      {choices.map(choice =>
+      {choices.map((choice, i) =>
         <Choice
-          key={'choice'}
+          key={'choice_' + i}
           choice={choice}
           onClick={onClick}
         />
