@@ -7,10 +7,9 @@ const check = (choice, answer) => {
 }
 const Quiz = ({quiz}) => {
   const title = quiz.question;
-  const correctAnswer = [quiz.correct_answer];
-  const incorrectAnswers = quiz.incorrect_answers;
-  const choices = incorrectAnswers.concat(correctAnswer);
+  const choices = quiz.incorrect_answers.concat(quiz.correct_answer);
   const answer = quiz.correct_answer;
+
 
   return (
     <Question
