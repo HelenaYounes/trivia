@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
-import Question from './Question.js';
-
 import Quiz from './Quiz.js';
-
 
 class Quizzes extends Component {
   constructor(props){
     super()
     this.state={
-      results:[]
+      questionsData:[],
+      disabledQuestion:false,
     }
   }
+
+  check = (choice, answer) => {
+    const winningMes = (choice === answer)?'yes':'no';
+    this.disableQuestion(winningMes);
+
+  }
   onFetchQuestions = (data) => {
-    this.setState({results: data.results});
+    this.setState({questionsData: data.results});
   }
 
   componentDidMount(){
@@ -26,6 +29,11 @@ class Quizzes extends Component {
       .then(this.onFetchQuestions)
   }
 
+  disableQuestion = (winningMes) => {
+    this.setState({disabledQuestion: true});
+    alert(winningMes);
+  }
+
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id !== prevProps.match.params.id
     if (newId) {
@@ -36,8 +44,8 @@ class Quizzes extends Component {
   render(){
     const { match } = this.props;
     const category = match.params.id;
-    return this.state.results.map((result, i)=> (
-      <Quiz key={category+i} quiz={result} />
+    return this.state.questionsData.map((result, i)=> (
+      <Quiz key={category+i} quiz={result} disabled={this.state.disabledQuestion} onClick={(choice, answer)=>this.check(choice, answer)}/>
     ));
   }
 }

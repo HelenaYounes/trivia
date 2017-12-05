@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import { Card, Dropdown, Icon, Input, Menu, Radio } from 'antd';
-import { Link, Route, Switch } from 'react-router-dom';
-import Quiz from './Quiz.js';
-
-const check = (choice, answer) => {
-  const winningMsg = choice === answer? 'yes': 'no'
-  return alert(winningMsg);
-}
+import { Dropdown, Icon, Menu } from 'antd';
+import { Link } from 'react-router-dom';
 
 class CategoryList extends Component {
   constructor(props){
@@ -17,7 +11,6 @@ class CategoryList extends Component {
     }
   }
   onFetchCategories = (data) => {
-    debugger;
     this.setState({categories: data.trivia_categories});
   }
   componentDidMount(){
@@ -26,19 +19,23 @@ class CategoryList extends Component {
 
   render(){
     const { match, } = this.props;
-    const menu =(<Menu>
-      {this.state.categories.map((category) => {
-        return (<Menu.Item key={category.id}>
-          <Link to={`/quiz/${category.id}`}>
-            {category.name}
-          </Link>
-        </Menu.Item>)})}
+    const menu =(
+      <Menu>
+        {this.state.categories.map((category) => {
+          return (
+            <Menu.Item key={category.id}>
+              <Link to={`/quiz/${category.id}`}>
+                {category.name}
+              </Link>
+            </Menu.Item>)
+          })
+        }
       </Menu>)
 
     return (<div>
       <Dropdown overlay={menu} >
         <a className="ant-dropdown-link" href="#">
-          Hover me <Icon type="down" />
+          Categories <Icon type="down" />
         </a>
       </Dropdown>
     </div>)

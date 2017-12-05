@@ -13,7 +13,6 @@ class Game extends Component {
     this.state={
       streakBar: 0,
       progressBar: [],
-      // result: false
     }
   }
 
