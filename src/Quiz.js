@@ -1,23 +1,18 @@
 import React from 'react';
 import Question from './Question.js';
 
-const check = (choice, answer) => {
-  const winningMsg = choice === answer? 'yes': 'no'
-  return alert(winningMsg);
-}
-const Quiz = ({quiz}) => {
+const Quiz = ({ quiz, currentQuestionIndex, disabledQuest, onClick }) => {
   const title = quiz.question;
   const choices = quiz.incorrect_answers.concat(quiz.correct_answer);
   const answer = quiz.correct_answer;
-
-
   return (
-    <Question
-      title={title}
-      choices={choices}
-      onClick={(choice) => check(choice, answer)}
-    />
-  )
+      <Question
+        title={title}
+        choices={choices}
+        disabledQuest={disabledQuest}
+        onClick={(choice)=>onClick(choice, answer)}
+      />
+  );
 }
 
 export default Quiz;

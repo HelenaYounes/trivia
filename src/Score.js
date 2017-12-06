@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Progress, Rate } from 'antd';
+import { Rate } from 'antd';
 import ProgressBar from './ProgressBar.js';
 
 class Score extends Component {

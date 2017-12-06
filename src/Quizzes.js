@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
-import Question from './Question.js';
-
+import Score from './Score.js';
 import Quiz from './Quiz.js';
-
 
 class Quizzes extends Component {
   constructor(props){
     super()
     this.state={
-      results:[]
+      questionsData:null,
+      disabledQuestion:false,
+      currentQuestionIndex: 0,
+      streakBar: 0,
+      progressBar: [],
     }
   }
+
+  check = (choice, answer) => {
+    this.setState({currentQuestionIndex: this.state.currentQuestionIndex +1})
+    this.checkScoreAnswer(choice, answer);
+  }
+
+
   onFetchQuestions = (data) => {
-    this.setState({results: data.results});
+    this.setState({questionsData: data.results});
   }
 
   componentDidMount(){
@@ -21,7 +29,7 @@ class Quizzes extends Component {
   }
 
   fetchCategories(categoryId) {
-    fetch('https://opentdb.com/api.php?amount=5&category='+categoryId)
+    fetch(`https://opentdb.com/api.php?amount=10&category=${categoryId}`)
       .then(response => response.json())
       .then(this.onFetchQuestions)
   }
@@ -31,14 +39,42 @@ class Quizzes extends Component {
     if (newId) {
       this.fetchCategories(this.props.match.params.id)
     }
+
+  }
+  checkScoreAnswer(choice, answer) {
+    choice===answer? this.updateProgressBar():this.resetStreakBar();
+  }
+  
+  resetStreakBar(){
+    const currentProgressBar = this.state.progressBar;
+    this.setState(({streakBar})=>({streakBar: 0}));
+    currentProgressBar.push(false)
+    this.setState(({progressBar})=>({progressBar: currentProgressBar}));
+  }
+  updateStreakBar(){
+    this.setState(({streakBar})=>({streakBar: this.state.streakBar +1 }));
+  }
+
+  updateProgressBar(){
+    const currentProgressBar = this.state.progressBar;
+    currentProgressBar.push(true)
+    this.setState(({progressBar})=>({progressBar: currentProgressBar}));
+    this.updateStreakBar();
   }
 
   render(){
     const { match } = this.props;
     const category = match.params.id;
-    return this.state.results.map((result, i)=> (
-      <Quiz key={category+i} quiz={result} />
-    ));
+
+    return (
+      <div>
+        <div className='questions-content'>
+          {
+            this.state.questionsData && <Quiz categoryId={category} quiz={this.state.questionsData[this.state.currentQuestionIndex]} currentQuestionIndex={this.state.currentQuestionIndex} disabledQuest={this.state.disabledQuestion} onClick={(choice, answer)=>this.check(choice, answer)}/>
+          }
+        </div>
+        <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
+      </div>)
   }
 }
 
