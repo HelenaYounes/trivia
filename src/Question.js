@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'antd';
 import Choice from './Choice.js';
 
-const Question = ({title, choices, disabled, onClick}) => {
+const Question = ({title, choices, disabledQuest, onClick}) => {
   return (
     <Card title={title}>
       {choices.map((choice, i) =>
@@ -10,7 +10,7 @@ const Question = ({title, choices, disabled, onClick}) => {
           key={'choice_' + i}
           choice={choice}
           onClick={()=>onClick(choice)}
-          disabled={disabled}
+          disabledQuest={disabledQuest}
         />
       )}
     </Card>

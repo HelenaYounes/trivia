@@ -2,12 +2,12 @@ import React from 'react';
 import { Radio } from 'antd';
 const RadioButton = Radio.Button;
 
-const Choice = ({choice, onClick, disabled}) => {
+const Choice = ({choice, onClick, disabledQuest}) => {
   return (
     <RadioButton
       style={{display:'block'}}
       onClick={()=>onClick()}
-      checked={disabled}
+      checked={disabledQuest}
     >
       {choice}
     </RadioButton>

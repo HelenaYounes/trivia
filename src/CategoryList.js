@@ -31,7 +31,6 @@ class CategoryList extends Component {
           })
         }
       </Menu>)
-
     return (<div>
       <Dropdown overlay={menu} >
         <a className="ant-dropdown-link" href="#">

@@ -21,9 +21,11 @@ class Home extends Component {
     return (
       this.state.categories.map((category) => {
         return (
-          <Link to={`/quiz/${category.id}`}>
-        <Card key={category.id} title={category.name}/> </Link>
-      )})
+          <Link to={`/quiz/${category.id}`} key={category.id}>
+            <Card title={category.name}/>
+          </Link>
+        )
+      })
     );
   }
 }
