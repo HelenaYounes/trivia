@@ -16,7 +16,7 @@ class App extends Component {
       <Layout>
         <Header>
           <div className='App-header'>
-            <CategoryList />
+            <p>categories</p>
             <h1 className="App-title" style={{color:'white'}}>Trivia</h1>
             <div className="social-media-icons">
               <SocialIcon url="http://twitter.com"/>
@@ -28,7 +28,7 @@ class App extends Component {
         <Content>
             <div>
               <Switch>
-                <Route exact path='/quiz/:id' component={Quizzes} />
+                <Route path='/categories/:categoryId/quizzes/:quizId/questions/:id' component={Quizzes} />
                 <Route path='/' component={Home} />
               </Switch>
             </div>

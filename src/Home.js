@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
+import uuid from 'uuid';
 import{ Link } from 'react-router-dom';
 
 class Home extends Component {
@@ -21,7 +22,7 @@ class Home extends Component {
     return (
       this.state.categories.map((category) => {
         return (
-          <Link to={`/quiz/${category.id}`} key={category.id}>
+          <Link to={`/categories/${category.id}/quizzes/${uuid.v4()}/questions/0`} key={category.id}>
             <Card title={category.name}/>
           </Link>
         )

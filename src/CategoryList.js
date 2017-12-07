@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dropdown, Icon, Menu } from 'antd';
 import { Link } from 'react-router-dom';
+import uuid from 'uuid';
 
 class CategoryList extends Component {
   constructor(props){
@@ -24,7 +25,7 @@ class CategoryList extends Component {
         {this.state.categories.map((category) => {
           return (
             <Menu.Item key={category.id}>
-              <Link to={`/quiz/${category.id}`}>
+              <Link to={`/categories/${category.id}/quizzes/${uuid.v4()}/questions/0`}>
                 {category.name}
               </Link>
             </Menu.Item>)
