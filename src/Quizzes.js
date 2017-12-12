@@ -41,7 +41,7 @@ class Quizzes extends Component {
     // window.localStorage.setItem()
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.fetchCategories(this.props.match.params.categoryId)
   }
 
@@ -53,7 +53,6 @@ class Quizzes extends Component {
 
   componentDidUpdate(prevProps) {
     const newCatId = this.props.match.params.categoryId !== prevProps.match.params.categoryId;
-    const newQuizId = this.props.match.params.quizId !== prevProps.match.params.quizId;
     if (newCatId) {
       this.fetchCategories(this.props.match.params.categoryId);
     }

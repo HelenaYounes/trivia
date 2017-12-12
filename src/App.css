@@ -1,3 +1,13 @@
+#root, .ant-layout {
+  height: 100%;
+}
+
+.ant-layout-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .App {
   text-align: center;
 }
@@ -7,20 +17,20 @@
   margin: auto;
   display: flex;
   justify-content: space-between;
-
 }
 
 .App-intro {
   font-size: large;
 }
- .card {
+
+.create-quiz-button {
+  display: flex;
+  align-items: center;
+}
+
+.card {
    padding: 40px;
    height: 300px;
    display: flex;
    justify-content: space-around;
  }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
-import CategoryList from './CategoryList.js';
 import Quizzes from './Quizzes.js';
 import Home from './Home.js';
 import 'antd/dist/antd.css';
@@ -26,7 +25,7 @@ class App extends Component {
           </div>
         </Header>
         <Content>
-            <div>
+            <div >
               <Switch>
                 <Route path='/categories/:categoryId/quizzes/:quizId/questions/:id' component={Quizzes} />
                 <Route path='/' component={Home} />
