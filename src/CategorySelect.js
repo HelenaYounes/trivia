@@ -7,7 +7,6 @@ class CategorySelect extends Component {
   constructor(props){
     super();
     this.state ={
-      results:[],
       categories:[]
     }
   }
@@ -19,15 +18,17 @@ class CategorySelect extends Component {
     fetch('https://opentdb.com/api_category.php').then(response => response.json()).then(this.onFetchCategories)
   }
 
-  handleChange = (value) => { console.log(`selected ${value}`)};
+  handleChange = (value) => {
+    this.props.onChange(value);
+  };
 
   render(){
     const { match, } = this.props;
     return <div>
-      <Select defaultValue="Pick a category"  onChange={this.handleChange}>
+      <Select onChange={this.handleChange}>
         {this.state.categories.map((category) => {
           return (
-            <Option key={category.id} value={category.name}>
+            <Option key={category.id} value={category.id}>
                 {category.name}
             </Option>)
           })

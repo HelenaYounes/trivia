@@ -18,7 +18,7 @@ class Home extends Component {
 
   render(){
     return (
-      <CreateQuiz/>
+      <CreateQuiz history={this.props.history}/>
     );
   }
 }

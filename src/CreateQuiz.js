@@ -1,11 +1,19 @@
 import React, { Component} from 'react';
 import CategorySelect from './CategorySelect';
-import { Button, Modal, Form, Input, Radio } from 'antd';
+import uuid from 'uuid';
+import { Button, Modal, Form, Input, Radio, Select } from 'antd';
+
 const FormItem = Form.Item;
+const Option = Select.Option;
+
+const handleChange = (value) => {
+  this.props.form.setFieldsValue('category')
+  console.log(`selected ${value}`)
+}
 
 const CollectionCreateForm = Form.create()(
   (props) => {
-    const { visible, onCancel, onCreate, form, categories } = props;
+    const { visible, onCancel, onCreate, form} = props;
     const { getFieldDecorator } = form;
     return (
       <Modal
@@ -16,19 +24,42 @@ const CollectionCreateForm = Form.create()(
         onOk={onCreate}
       >
         <Form layout="vertical">
-          <FormItem>
+          <FormItem label="Trivia Category">
             {getFieldDecorator('category', {
-              rules: [{ type: 'array', required: true, message: 'Please input a trivia category!' }],
+              initialValue:'Any',
+              rules: [{ required: false, message: 'Please input a trivia category!' }],
             })(
-              <CategorySelect/>
+              <CategorySelect />
             )}
           </FormItem>
-          <FormItem label="Description">
-            {getFieldDecorator('description')(<Input type="textarea" />)}
+          <FormItem label="Question type">
+            {getFieldDecorator('question-type', {
+              initialValue:'Any'
+            })(
+            <Select>
+              <Option value="Multiple Choice">Multiple Choice</Option>
+              <Option value="True / False">True / False</Option>
+            </Select>)
+            }
+          </FormItem>
+          <FormItem label="Question difficulty">
+            {getFieldDecorator('question-difficulty', {
+              initialValue:'Any'
+            })(
+            <Select>
+              <Option value="Easy">Easy</Option>
+              <Option value="Medium">Medium</Option>
+              <Option value="Hard">Hard</Option>
+            </Select>)
+            }
+          </FormItem>
+          <FormItem label="Number of questions">
+            {getFieldDecorator('total-questions', {
+              initialValue: '10',
+            })(<Input/>)}
           </FormItem>
           <FormItem className="collection-create-form_last-form-item">
             {getFieldDecorator('modifier', {
-              initialValue: 'public',
             })(
               <Radio.Group>
                 <Radio value="public">Public</Radio>
@@ -52,16 +83,25 @@ class CreateQuiz extends Component {
   handleCancel = () => {
     this.setState({ visible: false });
   }
+
+  onFetchQuestions = (data) => {
+    debugger;
+    const quizId = uuid.v4();
+    window.localStorage.setItem(quizId, JSON.stringify(data.results));
+    this.props.history.push(`/quizzes/${quizId}/questions/0`)
+    // this.form.resetFields();
+    // this.setState({ visible: false });
+  }
+
   handleCreate = () => {
-    const form = this.form;
-    form.validateFields((err, values) => {
+    this.form.validateFields((err, values) => {
       if (err) {
         return;
       }
 
-      console.log('Received values of form: ', values);
-      form.resetFields();
-      this.setState({ visible: false });
+      fetch(`https://opentdb.com/api.php?amount=10&category=${values.category}`)
+        .then(response => response.json())
+        .then(this.onFetchQuestions)
     });
   }
   saveFormRef = (form) => {
