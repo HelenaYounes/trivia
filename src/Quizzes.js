@@ -25,21 +25,21 @@ class Quizzes extends Component {
     this.setState({questionsData: data.results});
   }
 
-  checkScoreAnswer(choice, answer) {
+  checkScoreAnswer = (choice, answer) => {
     choice===answer? this.updateProgressBar():this.resetStreakBar();
   }
 
-  resetStreakBar(){
+  resetStreakBar = ()=>{
     const currentProgressBar = this.state.progressBar;
     this.setState(({streakBar})=>({streakBar: 0}));
     currentProgressBar.push(false)
     this.setState(({progressBar})=>({progressBar: currentProgressBar}));
   }
-  updateStreakBar(){
+  updateStreakBar = ()=>{
     this.setState(({streakBar})=>({streakBar: this.state.streakBar +1 }));
   }
 
-  updateProgressBar(){
+  updateProgressBar = ()=>{
     const currentProgressBar = this.state.progressBar;
     currentProgressBar.push(true)
     this.setState(({progressBar})=>({progressBar: currentProgressBar}));
@@ -49,7 +49,10 @@ class Quizzes extends Component {
   render(){
     const { match } = this.props;
     const quizId = match.params.quizId;
-    let idquest = Number(match.params.id);
+    const idquest = Number(match.params.id);
+    const prevQuestion = idquest - 1;
+    const nextQuestion = idquest + 1;
+    const lastQuestion = this.state.questionsData.length - 1;
 
     return (
       <div className='quiz-content'>
@@ -61,12 +64,16 @@ class Quizzes extends Component {
             onClick={(choice, answer)=>this.check(choice, answer)}
           />
           <div className='switch-question-buttons'>
-            <Link to={`/quizzes/${quizId}/questions/${idquest - 1}`}>
+            {prevQuestion >= 0 && (
+              <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
               <Button icon='step-backward'/>
             </Link>
-            <Link to={`/quizzes/${quizId}/questions/${idquest + 1}`}>
-              <Button icon='step-forward'/>
-            </Link>
+            )}
+            {nextQuestion < lastQuestion && (
+                <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
+                  <Button icon='step-forward'/>
+                </Link>
+            )}
           </div>
         <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
       </div>)
