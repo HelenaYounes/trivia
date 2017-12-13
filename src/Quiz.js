@@ -1,6 +1,5 @@
 import React from 'react';
 import Question from './Question.js';
-import { Link } from 'react-router-dom';
 
 const Quiz = ({ quiz,  disabledQuest, match, onClick }) => {
   const title = quiz.question;

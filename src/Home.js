@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
-import uuid from 'uuid';
-import{ Link } from 'react-router-dom';
+import CreateQuiz from './CreateQuiz';
 
 class Home extends Component {
   constructor(props){
@@ -20,13 +18,7 @@ class Home extends Component {
 
   render(){
     return (
-      this.state.categories.map((category) => {
-        return (
-          <Link to={`/categories/${category.id}/quizzes/${uuid.v4()}/questions/0`} key={category.id}>
-            <Card title={category.name}/>
-          </Link>
-        )
-      })
+      <CreateQuiz history={this.props.history}/>
     );
   }
 }
