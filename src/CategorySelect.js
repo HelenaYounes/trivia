@@ -23,7 +23,6 @@ class CategorySelect extends Component {
   };
 
   render(){
-    const { match, } = this.props;
     return <div>
       <Select onChange={this.handleChange}>
         {this.state.categories.map((category) => {

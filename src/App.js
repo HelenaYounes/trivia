@@ -25,7 +25,7 @@ class App extends Component {
           </div>
         </Header>
         <Content>
-            <div >
+            <div className='App-content' >
               <Switch>
                 <Route path='/quizzes/:quizId/questions/:id' component={Quizzes} />
                 <Route path='/' component={Home} />

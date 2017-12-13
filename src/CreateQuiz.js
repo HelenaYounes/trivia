@@ -6,10 +6,6 @@ import { Button, Modal, Form, Input, Radio, Select } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const handleChange = (value) => {
-  this.props.form.setFieldsValue('category')
-  console.log(`selected ${value}`)
-}
 
 const CollectionCreateForm = Form.create()(
   (props) => {
@@ -26,35 +22,35 @@ const CollectionCreateForm = Form.create()(
         <Form layout="vertical">
           <FormItem label="Trivia Category">
             {getFieldDecorator('category', {
-              initialValue:'Any',
-              rules: [{ required: false, message: 'Please input a trivia category!' }],
+              initialValue:'5',
+              rules: [{ required: true, message: 'Please input a trivia category!' }],
             })(
               <CategorySelect />
             )}
           </FormItem>
           <FormItem label="Question type">
-            {getFieldDecorator('question-type', {
-              initialValue:'Any'
+            {getFieldDecorator('type', {
+              initialValue:'multiple'
             })(
             <Select>
-              <Option value="Multiple Choice">Multiple Choice</Option>
-              <Option value="True / False">True / False</Option>
+              <Option value="multiple">Multiple Choice</Option>
+              <Option value="boolean">True / False</Option>
             </Select>)
             }
           </FormItem>
           <FormItem label="Question difficulty">
-            {getFieldDecorator('question-difficulty', {
-              initialValue:'Any'
+            {getFieldDecorator('difficulty', {
+              initialValue:'medium'
             })(
             <Select>
-              <Option value="Easy">Easy</Option>
-              <Option value="Medium">Medium</Option>
-              <Option value="Hard">Hard</Option>
+              <Option value="easy">Easy</Option>
+              <Option value="medium">Medium</Option>
+              <Option value="hard">Hard</Option>
             </Select>)
             }
           </FormItem>
           <FormItem label="Number of questions">
-            {getFieldDecorator('total-questions', {
+            {getFieldDecorator('amount', {
               initialValue: '10',
             })(<Input/>)}
           </FormItem>
@@ -85,12 +81,9 @@ class CreateQuiz extends Component {
   }
 
   onFetchQuestions = (data) => {
-    debugger;
     const quizId = uuid.v4();
     window.localStorage.setItem(quizId, JSON.stringify(data.results));
     this.props.history.push(`/quizzes/${quizId}/questions/0`)
-    // this.form.resetFields();
-    // this.setState({ visible: false });
   }
 
   handleCreate = () => {
@@ -98,8 +91,7 @@ class CreateQuiz extends Component {
       if (err) {
         return;
       }
-
-      fetch(`https://opentdb.com/api.php?amount=10&category=${values.category}`)
+      fetch(`https://opentdb.com/api.php?amount=${values.amount}&category=${values.category}&difficulty=${values.difficulty}&type=${values.type}`)
         .then(response => response.json())
         .then(this.onFetchQuestions)
     });

@@ -7,7 +7,6 @@ import Quiz from './Quiz.js';
 class Quizzes extends Component {
   constructor(props){
     const { quizId } = props.match.params;
-    debugger
     super()
     this.state={
       questionsData: JSON.parse(window.localStorage.getItem(quizId)),
@@ -24,7 +23,6 @@ class Quizzes extends Component {
 
   onFetchQuestions = (data) => {
     this.setState({questionsData: data.results});
-    // window.localStorage.setItem()
   }
 
   checkScoreAnswer(choice, answer) {
