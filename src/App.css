@@ -23,14 +23,12 @@
   display: flex;
   justify-content: space-around;
 }
-/*.card-title {
-  display: flex;
-  align-content: space-around;
-}*/
+
 
 .App-intro {
   font-size: large;
 }
+
 
 .create-quiz-button {
   display: flex;

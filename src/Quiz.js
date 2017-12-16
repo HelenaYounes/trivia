@@ -19,10 +19,11 @@ class Quiz extends Component {
     }
   }
 
-  check = (choice, answer) => {
+  check = (choice, answer, quizId, idquest) => {
     this.checkScoreAnswer(choice, answer);
-    this.setState({disabledQuestion: !this.state.disabledQuestion});
+    // this.setState({disabledQuestion: !this.state.disabledQuestion});
     alert(`you picked ${choice}, the correct answer is${answer}`)
+    this.props.history.push(`/quizzes/${quizId}/questions/${idquest + 1}`)
   }
 
   onFetchQuestions = (data) => {
@@ -63,6 +64,7 @@ class Quiz extends Component {
     const answer = quiz.correct_answer;
     return (
       <div className='quiz-content'>
+        <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
         <Card
             className='quiz-card'
             match={match}
@@ -73,7 +75,7 @@ class Quiz extends Component {
                 return <RadioButton
                   key={i}
                   disabled={this.state.disabledQuestion}
-                  onClick={()=>this.check(choice, answer)}
+                  onClick={()=>this.check(choice, answer, quizId, idquest)}
                   style={{display:'block'}}
                   value={choice}>{choice}
                 </RadioButton>})
@@ -86,13 +88,12 @@ class Quiz extends Component {
               <Button icon='step-backward'/>
             </Link>)
           }
-          {nextQuestion < lastQuestion && (
+          {nextQuestion <= lastQuestion && (
             <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
               <Button icon='step-forward' onClick={()=>this.setState({disabledQuestion: false})}/>
             </Link>)
           }
         </div>
-        <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
       </div>
     )
   }
