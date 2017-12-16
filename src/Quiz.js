@@ -20,11 +20,16 @@ class Quiz extends Component {
     }
   }
 
-  check = (choice, answer, quizId, idquest) => {
+  check = (choice, answer, quizId, questionId, lastQuestion) => {
     this.checkScoreAnswer(choice, answer);
-    // this.setState({disabledQuestion: !this.state.disabledQuestion});
     alert(`you picked ${choice}, the correct answer is${answer}`)
-    this.props.history.push(`/quizzes/${quizId}/questions/${idquest + 1}`)
+    this.nextQuestion(quizId, questionId, lastQuestion);
+  }
+
+  nextQuestion = (quizId, questionId, lastQuestion) => {
+    if (questionId < lastQuestion){
+      this.props.history.push(`/quizzes/${quizId}/questions/${questionId + 1}`)
+    }
   }
 
   onFetchQuestions = (data) => {
@@ -76,7 +81,7 @@ class Quiz extends Component {
                 return <RadioButton
                   key={i}
                   disabled={this.state.disabledQuestion}
-                  onClick={()=>this.check(choice, answer, quizId, idquest)}
+                  onClick={()=>this.check(choice, answer, quizId, idquest, lastQuestion)}
                   style={{display:'block'}}
                   value={choice}
                 >
