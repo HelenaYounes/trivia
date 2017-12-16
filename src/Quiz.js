@@ -1,31 +1,101 @@
-import React from 'react';
-import { Card, Radio } from 'antd';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Card, Radio } from 'antd';
+import Score from './Score.js';
 import shuffle from 'shuffle-array';
+
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-const Quiz = ({ quiz,  disabledQuest, match, onClick }) => {
-  const title = quiz.question;
-  const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer));
-  const answer = quiz.correct_answer;
+class Quiz extends Component {
+  constructor(props){
+    const { quizId } = props.match.params;
+    super()
+    this.state={
+      questionsData: JSON.parse(window.localStorage.getItem(quizId)),
+      disabledQuestion:false,
+      streakBar: 0,
+      progressBar: [],
+    }
+  }
 
-  return <Card
-      className='quiz-card'
-      match={match}
-      title={title}
-    >
-      <RadioGroup defaultValue="a">
-        {choices.map((choice, i) => {
-          return <RadioButton
-            key={i}
-            disabled={disabledQuest}
-            onClick={()=>onClick(choice, answer)}
-            style={{display:'block'}}
-            value={choice}>{choice}
-          </RadioButton>})
-        }
-      </RadioGroup>
-    </Card>
+  check = (choice, answer) => {
+    this.checkScoreAnswer(choice, answer);
+    this.setState({disabledQuestion: !this.state.disabledQuestion});
+    alert(`you picked ${choice}, the correct answer is${answer}`)
+  }
+
+  onFetchQuestions = (data) => {
+    this.setState({questionsData: data.results});
+  }
+
+  checkScoreAnswer = (choice, answer) => {
+    choice===answer? this.updateProgressBar():this.resetStreakBar();
+  }
+
+  resetStreakBar = ()=>{
+    const currentProgressBar = this.state.progressBar;
+    this.setState(({streakBar})=>({streakBar: 0}));
+    currentProgressBar.push(false)
+    this.setState(({progressBar})=>({progressBar: currentProgressBar}));
+  }
+  updateStreakBar = ()=>{
+    this.setState(({streakBar})=>({streakBar: this.state.streakBar +1 }));
+  }
+
+  updateProgressBar = ()=>{
+    const currentProgressBar = this.state.progressBar;
+    currentProgressBar.push(true)
+    this.setState(({progressBar})=>({progressBar: currentProgressBar}));
+    this.updateStreakBar();
+  }
+
+  render(){
+    const { match } = this.props;
+    const quizId = match.params.quizId;
+    const idquest = Number(match.params.id);
+    const prevQuestion = idquest - 1;
+    const nextQuestion = idquest + 1;
+    const lastQuestion = this.state.questionsData.length - 1;
+    const quiz = this.state.questionsData[idquest]
+    const title = quiz.question;
+    const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer));
+    const answer = quiz.correct_answer;
+    return (
+      <div className='quiz-content'>
+        <Card
+            className='quiz-card'
+            match={match}
+            title={title}
+          >
+            <RadioGroup defaultValue="a">
+              {choices.map((choice, i) => {
+                return <RadioButton
+                  key={i}
+                  disabled={this.state.disabledQuestion}
+                  onClick={()=>this.check(choice, answer)}
+                  style={{display:'block'}}
+                  value={choice}>{choice}
+                </RadioButton>})
+              }
+            </RadioGroup>
+          </Card>
+        <div className='switch-question-buttons'>
+          {prevQuestion >= 0 && (
+            <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
+              <Button icon='step-backward'/>
+            </Link>)
+          }
+          {nextQuestion < lastQuestion && (
+            <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
+              <Button icon='step-forward' onClick={()=>this.setState({disabledQuestion: false})}/>
+            </Link>)
+          }
+        </div>
+        <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
+      </div>
+    )
+  }
 }
 
 export default Quiz;
