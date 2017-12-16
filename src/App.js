@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
 import Quizzes from './Quizzes.js';
 import Home from './Home.js';
@@ -16,7 +16,7 @@ class App extends Component {
         <Header>
           <div className='App-header'>
             <p>categories</p>
-            <h1 className="App-title" style={{color:'white'}}>Trivia</h1>
+            <Link to='/'><h1 className="App-title" style={{color:'white'}}>Trivia</h1></Link>
             <div className="social-media-icons">
               <SocialIcon url="http://twitter.com"/>
               <SocialIcon url="http://facebook.com"/>

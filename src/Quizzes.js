@@ -18,8 +18,8 @@ class Quizzes extends Component {
 
   check = (choice, answer) => {
     this.checkScoreAnswer(choice, answer);
+    this.setState({disabledQuestion: !this.state.disabledQuestion});
   }
-
 
   onFetchQuestions = (data) => {
     this.setState({questionsData: data.results});
@@ -57,27 +57,28 @@ class Quizzes extends Component {
     return (
       <div className='quiz-content'>
         <Quiz
-            match={match}
-            quiz={this.state.questionsData[idquest]}
-            currentQuestionIndex={idquest}
-            disabledQuest={this.state.disabledQuestion}
-            onClick={(choice, answer)=>this.check(choice, answer)}
-          />
-          <div className='switch-question-buttons'>
-            {prevQuestion >= 0 && (
-              <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
+          match={match}
+          quiz={this.state.questionsData[idquest]}
+          currentQuestionIndex={idquest}
+          disabledQuest={this.state.disabledQuestion}
+          onClick={(choice, answer)=>this.check(choice, answer)}
+        />
+        <div className='switch-question-buttons'>
+          {prevQuestion >= 0 && (
+            <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
               <Button icon='step-backward'/>
-            </Link>
-            )}
-            {nextQuestion < lastQuestion && (
-                <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
-                  <Button icon='step-forward'/>
-                </Link>
-            )}
-          </div>
-        <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
-      </div>)
+            </Link>)
           }
+          {nextQuestion < lastQuestion && (
+            <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
+              <Button icon='step-forward' onClick={()=>this.setState({disabledQuestion: false})}/>
+            </Link>)
+          }
+        </div>
+        <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
+      </div>
+    )
+  }
 }
 
 export default Quizzes;
