@@ -78,7 +78,9 @@ class Quiz extends Component {
                   disabled={this.state.disabledQuestion}
                   onClick={()=>this.check(choice, answer, quizId, idquest)}
                   style={{display:'block'}}
-                  value={choice}>{choice}
+                  value={choice}
+                >
+                  {<InnerHTML html={choice}/>}
                 </RadioButton>})
               }
             </RadioGroup>
