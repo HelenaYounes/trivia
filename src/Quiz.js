@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, Radio } from 'antd';
 import Score from './Score.js';
 import shuffle from 'shuffle-array';
+import InnerHTML from 'dangerously-set-inner-html';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -68,7 +69,7 @@ class Quiz extends Component {
         <Card
             className='quiz-card'
             match={match}
-            title={title}
+            title={<InnerHTML html={title}/>}
           >
             <RadioGroup defaultValue="a">
               {choices.map((choice, i) => {
