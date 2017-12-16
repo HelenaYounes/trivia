@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
+import { Icon, Layout } from 'antd';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
-import { SocialIcon } from 'react-social-icons';
 import Quiz from './Quiz.js';
 import Home from './Home.js';
 import 'antd/dist/antd.css';
@@ -15,13 +14,9 @@ class App extends Component {
       <Layout>
         <Header>
           <div className='App-header'>
-            <p>categories</p>
+            <Icon type="bars" style={{fontSize: 20, color:'white'}}/>
             <Link to='/'><h1 className="App-title" style={{color:'white'}}>Trivia</h1></Link>
-            <div className="social-media-icons">
-              <SocialIcon url="http://twitter.com"/>
-              <SocialIcon url="http://facebook.com"/>
-              <SocialIcon url="http://linkedin.com"/>
-            </div>
+            <Icon type="qq" style={{fontSize: 20, color:'white'}}/>
           </div>
         </Header>
         <Content>
