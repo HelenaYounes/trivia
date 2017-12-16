@@ -10,13 +10,14 @@ const Quiz = ({ quiz,  disabledQuest, match, onClick }) => {
   const answer = quiz.correct_answer;
 
   return <Card
-      style={{width: 700 }}
+      className='quiz-card'
       match={match}
       title={title}
     >
       <RadioGroup defaultValue="a">
-        {choices.map((choice) => {
+        {choices.map((choice, i) => {
           return <RadioButton
+            key={i}
             disabled={disabledQuest}
             onClick={()=>onClick(choice, answer)}
             style={{display:'block'}}

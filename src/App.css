@@ -19,10 +19,14 @@
   justify-content: space-between;
 }
 
-
-.quiz-content {
-  width:600px;
+.ant-card-head-title {
+  display: flex;
+  justify-content: space-around;
 }
+/*.card-title {
+  display: flex;
+  align-content: space-around;
+}*/
 
 .App-intro {
   font-size: large;
