@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CreateQuiz from './CreateQuiz';
+import Quizes from './Quizes';
 
 class Home extends Component {
   constructor(props){
@@ -17,8 +18,10 @@ class Home extends Component {
   }
 
   render(){
-    return (
+    return (<div>
       <CreateQuiz history={this.props.history}/>
+      <Quizes/>
+    </div>
     );
   }
 }
