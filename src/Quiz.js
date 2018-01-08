@@ -1,42 +1,44 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Radio } from 'antd';
+import { Button, Card, Input, Progress, Rate } from 'antd';
 import Score from './Score.js';
 import shuffle from 'shuffle-array';
 import InnerHTML from 'dangerously-set-inner-html';
-
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
 
 class Quiz extends Component {
   constructor(props){
     const { quizId } = props.match.params;
     super()
     this.state={
-      questionsData: JSON.parse(window.localStorage.getItem(quizId)),
-      disabledQuestion:false,
+      questions: JSON.parse(window.localStorage.getItem(quizId)),
       streakBar: 0,
       progressBar: [],
     }
   }
 
-  check = (choice, answer, quizId, questionId, lastQuestion) => {
-    this.checkScoreAnswer(choice, answer);
-    alert(`you picked ${choice}, the correct answer is${answer}`)
-    this.nextQuestion(quizId, questionId, lastQuestion);
-  }
+  check = (choice, answer) => {
+    const { id, quizId } = this.props.match.params;
+    const currentQuest = this.state.questions[Number(id)];
+    const nextQuest =  Number(id)+1;
+    currentQuest.choice = choice;
+    currentQuest.correct = choice === answer
+    // const resultsBar = this.state.progressBar;
+    // resultsBar = resultsBar.push(currentQuest.correct)
+    this.setState({ questions: this.state.questions}, (() => {
+      window.localStorage.setItem(quizId, JSON.stringify(this.state.questions))
+    }));
 
-  nextQuestion = (quizId, questionId, lastQuestion) => {
-    if (questionId < lastQuestion){
-      this.props.history.push(`/quizzes/${quizId}/questions/${questionId + 1}`)
-    }
+    this.checkScoreAnswer(choice, answer);
+    alert(`you picked ${choice}, the correct answer is ${answer}`)
+    // this.props.history.push(`/quizzes/${quizId}/questions/${nextQuest}`)
   }
 
   onFetchQuestions = (data) => {
-    this.setState({questionsData: data.results});
+    this.setState({questions: data.results});
   }
 
   checkScoreAnswer = (choice, answer) => {
+
     choice===answer? this.updateProgressBar():this.resetStreakBar();
   }
 
@@ -60,35 +62,41 @@ class Quiz extends Component {
   render(){
     const { match } = this.props;
     const quizId = match.params.quizId;
-    const idquest = Number(match.params.id);
-    const prevQuestion = idquest - 1;
-    const nextQuestion = idquest + 1;
-    const lastQuestion = this.state.questionsData.length - 1;
-    const quiz = this.state.questionsData[idquest]
+    const currentQuestion = Number(match.params.id);
+    const prevQuestion = currentQuestion - 1;
+    const nextQuestion = currentQuestion + 1;
+    const lastQuestion = this.state.questions.length - 1;
+    const quiz = this.state.questions[currentQuestion]
     const title = quiz.question;
     const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer));
     const answer = quiz.correct_answer;
     return (
       <div className='quiz-content'>
         <Score streakBar={this.state.streakBar} results={this.state.progressBar}/>
+        {
+          (this.state.questions[currentQuestion].choice && (this.state.questions[currentQuestion].choice === this.state.questions[currentQuestion].correct_answer) ) &&  <Progress type="circle" percent={100} width={15} status= "success"/>
+          }
+
         <Card
             className='quiz-card'
             match={match}
             title={<InnerHTML html={title}/>}
           >
-            <RadioGroup defaultValue="a">
               {choices.map((choice, i) => {
-                return <RadioButton
+                return <Button
                   key={i}
-                  disabled={this.state.disabledQuestion}
-                  onClick={()=>this.check(choice, answer, quizId, idquest, lastQuestion)}
+                  disabled={!!quiz.choice}
+                  onClick={()=>this.check(choice, answer)}
                   style={{display:'block'}}
-                  value={choice}
+                  size="large"
                 >
-                  {<InnerHTML html={choice}/>}
-                </RadioButton>})
+                  <InnerHTML html={choice}/>
+                  {(choice === quiz.choice) && (
+                    quiz.choice === answer?
+                    <Progress key={i} type="circle" percent={100} width={15} status="success"/>:<Progress key={i} type="circle" percent={100} width={15} status="exception"/>
+                  )}
+                </Button>})
               }
-            </RadioGroup>
           </Card>
         <div className='switch-question-buttons'>
           {prevQuestion >= 0 && (
@@ -98,7 +106,7 @@ class Quiz extends Component {
           }
           {nextQuestion <= lastQuestion && (
             <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
-              <Button icon='step-forward' onClick={()=>this.setState({disabledQuestion: false})}/>
+              <Button icon='step-forward'/>
             </Link>)
           }
         </div>
