@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Input, Progress, Rate } from 'antd';
+import { Button, Card, Progress } from 'antd';
 import shuffle from 'shuffle-array';
 import InnerHTML from 'dangerously-set-inner-html';
 

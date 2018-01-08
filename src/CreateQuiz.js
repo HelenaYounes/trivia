@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import CategorySelect from './CategorySelect';
 import uuid from 'uuid';
-import { Button, Modal, Form, Input, Radio, Select } from 'antd';
+import { Button, Modal, Form, Input, Select } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -22,7 +22,7 @@ const CollectionCreateForm = Form.create()(
         <Form layout="vertical">
           <FormItem label="Trivia Category">
             {getFieldDecorator('category', {
-              initialValue:'5',
+              initialValue:'Entertainment: Music',
               rules: [{ required: true, message: 'Please input a trivia category!' }],
             })(
               <CategorySelect />
@@ -40,7 +40,7 @@ const CollectionCreateForm = Form.create()(
           </FormItem>
           <FormItem label="Question difficulty">
             {getFieldDecorator('difficulty', {
-              initialValue:'medium'
+              initialValue:'easy'
             })(
             <Select>
               <Option value="easy">Easy</Option>
@@ -77,8 +77,8 @@ class CreateQuiz extends Component {
 
     quizes[quizId] = data.results;
     window.localStorage.setItem("quizes", JSON.stringify(quizes));
-
     this.props.history.push(`/quizzes/${quizId}/questions/0`);
+    this.setState({ visible: false });
   }
 
   handleCreate = () => {
