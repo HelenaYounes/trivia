@@ -73,8 +73,12 @@ class CreateQuiz extends Component {
 
   onFetchQuestions = (data) => {
     const quizId = uuid.v4();
-    window.localStorage.setItem(quizId, JSON.stringify(data.results));
-    this.props.history.push(`/quizzes/${quizId}/questions/0`)
+    const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
+
+    quizes[quizId] = data.results;
+    window.localStorage.setItem("quizes", JSON.stringify(quizes));
+
+    this.props.history.push(`/quizzes/${quizId}/questions/0`);
   }
 
   handleCreate = () => {
