@@ -10,11 +10,9 @@ class Quiz extends Component {
     const quizes = JSON.parse(window.localStorage.getItem("quizes"));
     const questions = quizes[quizId];
 
-  super()
+    super()
     this.state = {
       questions,
-      streakBar: 0,
-      progressBar: [],
     }
   }
 
