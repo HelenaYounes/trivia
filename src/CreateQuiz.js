@@ -22,7 +22,7 @@ const CollectionCreateForm = Form.create()(
         <Form layout="vertical">
           <FormItem label="Trivia Category">
             {getFieldDecorator('category', {
-              initialValue:'Entertainment: Music',
+              initialValue:" Mythology",
               rules: [{ required: true, message: 'Please input a trivia category!' }],
             })(
               <CategorySelect />

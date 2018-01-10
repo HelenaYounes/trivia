@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, Row , List, Progress, Spin } from 'antd';
+import { List } from 'antd';
 import { toPairs } from 'ramda';
 import { Link } from 'react-router-dom';
 
@@ -31,21 +31,18 @@ class Quizes extends Component {
         renderItem={([quizId, questions]) => {
           const question = questions[0];
           const category = question.category;
-          const score = questions.filter(question => question.choice === question.correct_answer).length / questions.length;
+          const totalQuestions = questions.length
           const answered = questions.filter(question => question.choice).length;
-          const unanswered = questions.length - answered;
+          const score = questions.filter(question => question.choice === question.correct_answer).length / answered || 0
 
           return (
-            <Row>
-              <Col span={22}>
-                <List.Item actions={[<Link to={`/quizzes/${quizId}/questions/${answered}`}>Continue</Link>, <a icon="delete" onClick={()=>this.delete(quizId)}>Delete</a>]}>
+                <List.Item
+                    actions={[<Link to={`/quizzes/${quizId}/questions/${answered}`}>Continue</Link>, <a icon="delete" onClick={()=>this.delete(quizId)}>Delete</a>]}>
                   <List.Item.Meta
                     title={category}
                   />
-                  <Progress percent={score*100} type="circle" width={80} />
+                  {`Score: ${score*100}/${totalQuestions}`}
                 </List.Item>
-              </Col>
-            </Row>
           )
         }}
       />

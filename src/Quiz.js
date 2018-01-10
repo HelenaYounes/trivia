@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Progress } from 'antd';
+import { Button, Card, message, Progress, Radio} from 'antd';
 import shuffle from 'shuffle-array';
 import InnerHTML from 'dangerously-set-inner-html';
+
+const RadioGroup = Radio.Group;
+const radioStyle = Radio.Style;
 
 class Quiz extends Component {
   constructor(props){
@@ -16,18 +19,18 @@ class Quiz extends Component {
     }
   }
 
- isCorrect = (choice, answer) => { return  choice === answer }
 
   check = (choice, answer) => {
     const { id, quizId } = this.props.match.params;
     const currentQuest = this.state.questions[Number(id)];
-    const nextQuest =  Number(id)+1;
     currentQuest.choice = choice;
     this.setState({ questions: this.state.questions}, (() => {
       const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
       quizes[quizId] = this.state.questions;
 
       window.localStorage.setItem("quizes", JSON.stringify(quizes));
+      message.success(`correct answer: ${answer}`, 2)
+
     }));
   }
 
@@ -46,7 +49,6 @@ class Quiz extends Component {
     const title = quiz.question;
     const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer));
     const answer = quiz.correct_answer;
-    const totalCorrect = this.state.questions.filter((question) => question.choice === question.correct_answer).length
     const answered = this.state.questions.filter((question) => question.choice).length;
     return (
       <div className='quiz-content'>
@@ -56,21 +58,16 @@ class Quiz extends Component {
             match={match}
             title={<InnerHTML html={title}/>}
           >
+            <RadioGroup>
               {choices.map((choice, i) => {
-                return <Button
-                  key={i}
-                  disabled={!!quiz.choice}
-                  onClick={()=>this.check(choice, answer)}
-                  style={{display:'block'}}
-                  size="large"
-                >
-                  <InnerHTML html={choice}/>
-                  {(choice === quiz.choice) && (
-                    quiz.choice === answer?
-                    <Progress key={i} type="circle" percent={100} width={15} status="success"/>:<Progress key={i} type="circle" percent={100} width={15} status="exception"/>
-                  )}
-                </Button>})
+                return <Radio style={radioStyle} key={i} value={choice} onClick={()=>this.check(choice, answer)}>
+                    <InnerHTML html={choice}/>
+                    {quiz.choice === choice && <Progress type="circle" percent={100} width={15} status={(quiz.choice === quiz.correct_answer)?"success":"exception"}/>
+                    }
+                  </Radio>
+                })
               }
+            </RadioGroup>
           </Card>
         <div className='switch-question-buttons'>
           {prevQuestion >= 0 && (

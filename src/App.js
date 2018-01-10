@@ -21,7 +21,7 @@ class App extends Component {
         </Header>
         <Content>
           <Row>
-            <Col span={20} offset={2}>
+            <Col span={18} offset={4}>
               <Switch>
                 <Route path='/quizzes/:quizId/questions/:id' component={Quiz} />
                 <Route path='/' component={Quizes} />
