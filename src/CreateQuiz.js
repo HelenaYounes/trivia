@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import CategorySelect from './CategorySelect';
 import uuid from 'uuid';
-import { Button, Modal, Form, Input, Radio, Select } from 'antd';
+import { Button, Modal, Form, Input, Select } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -22,7 +22,7 @@ const CollectionCreateForm = Form.create()(
         <Form layout="vertical">
           <FormItem label="Trivia Category">
             {getFieldDecorator('category', {
-              initialValue:'5',
+              initialValue: 20,
               rules: [{ required: true, message: 'Please input a trivia category!' }],
             })(
               <CategorySelect />
@@ -40,7 +40,7 @@ const CollectionCreateForm = Form.create()(
           </FormItem>
           <FormItem label="Question difficulty">
             {getFieldDecorator('difficulty', {
-              initialValue:'medium'
+              initialValue:'easy'
             })(
             <Select>
               <Option value="easy">Easy</Option>
@@ -53,15 +53,6 @@ const CollectionCreateForm = Form.create()(
             {getFieldDecorator('amount', {
               initialValue: '10',
             })(<Input/>)}
-          </FormItem>
-          <FormItem className="collection-create-form_last-form-item">
-            {getFieldDecorator('modifier', {
-            })(
-              <Radio.Group>
-                <Radio value="public">Public</Radio>
-                <Radio value="private">Private</Radio>
-              </Radio.Group>
-            )}
           </FormItem>
         </Form>
       </Modal>
@@ -82,8 +73,12 @@ class CreateQuiz extends Component {
 
   onFetchQuestions = (data) => {
     const quizId = uuid.v4();
-    window.localStorage.setItem(quizId, JSON.stringify(data.results));
-    this.props.history.push(`/quizzes/${quizId}/questions/0`)
+    const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
+
+    quizes[quizId] = data.results;
+    window.localStorage.setItem("quizes", JSON.stringify(quizes));
+    this.props.history.push(`/quizzes/${quizId}/questions/0`);
+    this.setState({ visible: false });
   }
 
   handleCreate = () => {

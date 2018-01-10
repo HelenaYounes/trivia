@@ -1,31 +1,23 @@
-#root, .ant-layout {
-  height: 100%;
-}
-
-.ant-layout-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .App {
   text-align: center;
 }
 
+
 .App-header {
-  width: 100%;
-  margin: auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.ant-card-head-title {
 }
 
-
-.quiz-content {
-  width:600px;
-}
 
 .App-intro {
   font-size: large;
+}
+
+.ant-list-item-content{
+  justify-content: center
 }
 
 .create-quiz-button {
@@ -34,8 +26,5 @@
 }
 
 .card {
-   padding: 40px;
-   height: 300px;
-   display: flex;
-   justify-content: space-around;
+
  }

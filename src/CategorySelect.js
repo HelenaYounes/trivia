@@ -24,10 +24,10 @@ class CategorySelect extends Component {
 
   render(){
     return <div>
-      <Select onChange={this.handleChange}>
+      <Select onChange={this.handleChange} value={this.props.value}>
         {this.state.categories.map((category) => {
           return (
-            <Option key={category.id} value={category.id}>
+            <Option value={category.id} key={category.id} >
                 {category.name}
             </Option>)
           })

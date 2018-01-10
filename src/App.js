@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { SocialIcon } from 'react-social-icons';
-import Quizzes from './Quizzes.js';
-import Home from './Home.js';
+import { Icon, Layout, Row, Col } from 'antd';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+import Quiz from './Quiz.js';
+import CreateQuiz from './CreateQuiz.js';
+import Quizes from './Quizes.js';
 import 'antd/dist/antd.css';
 import './App.css';
 const { Header, Content } = Layout;
@@ -11,31 +11,35 @@ const { Header, Content } = Layout;
 class App extends Component {
   render() {
     return (
-      <Router>
       <Layout>
         <Header>
           <div className='App-header'>
-            <p>categories</p>
-            <h1 className="App-title" style={{color:'white'}}>Trivia</h1>
-            <div className="social-media-icons">
-              <SocialIcon url="http://twitter.com"/>
-              <SocialIcon url="http://facebook.com"/>
-              <SocialIcon url="http://linkedin.com"/>
-            </div>
+            <Icon type="bars" style={{fontSize: 20, color:'white'}}/>
+            <Link to='/'><h1 className="App-title" style={{color:'white'}}>Trivia</h1></Link>
+            <CreateQuiz history={this.props.history}/>
           </div>
         </Header>
         <Content>
-            <div className='App-content' >
+          <Row>
+            <Col span={18} offset={4}>
               <Switch>
-                <Route path='/quizzes/:quizId/questions/:id' component={Quizzes} />
-                <Route path='/' component={Home} />
+                <Route path='/quizzes/:quizId/questions/:id' component={Quiz} />
+                <Route path='/' component={Quizes} />
               </Switch>
-            </div>
+            </Col>
+          </Row>
         </Content>
       </Layout>
-    </Router>
     );
   }
 }
 
-export default App;
+const routes = () => (
+  <Router>
+    <Route path="/" component={App} />
+  </Router>
+)
+
+
+
+export default routes;
