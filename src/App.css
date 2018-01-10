@@ -16,6 +16,9 @@
   font-size: large;
 }
 
+.ant-list-item-content{
+  justify-content: center
+}
 
 .create-quiz-button {
   display: flex;

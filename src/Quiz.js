@@ -19,7 +19,6 @@ class Quiz extends Component {
     }
   }
 
-
   check = (choice, answer) => {
     const { id, quizId } = this.props.match.params;
     const currentQuest = this.state.questions[Number(id)];

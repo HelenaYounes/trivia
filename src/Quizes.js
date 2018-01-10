@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import CreateQuiz from './CreateQuiz.js'
+import { Link } from 'react-router-dom';
 import { List } from 'antd';
 import { toPairs } from 'ramda';
-import { Link } from 'react-router-dom';
 
 class Quizes extends Component {
   constructor(props){
@@ -13,41 +14,40 @@ class Quizes extends Component {
   }
 
   delete = (quizId)=>{
-    const quizes = this.state.quizes;
+    const quizes = this.state.quizes ;
     delete quizes[quizId];
     this.setState({ quizes: quizes }, () => {
       window.localStorage.setItem("quizes", JSON.stringify(this.state.quizes));
     })
   }
-
   render(){
+
     const quizes = this.state.quizes;
     const list = toPairs(quizes);
-
-      return(<List
+    return <List
         className="demo-loadmore-list"
         itemLayout="horizontal"
         dataSource={list}
         renderItem={([quizId, questions]) => {
           const question = questions[0];
+          const totalQuestions = questions.length;
           const category = question.category;
-          const totalQuestions = questions.length
           const answered = questions.filter(question => question.choice).length;
-          const score = questions.filter(question => question.choice === question.correct_answer).length / answered || 0
+          const score = questions.filter(question => question.choice === question.correct_answer).length / answered;
+          return (<List.Item actions={[
+            <Link to={`/quizzes/${quizId}/questions/${0}`}>
+              Continue
+            </Link>,
+            <a icon="delete" onClick={()=>this.delete(quizId)}>
+              Delete
+            </a>]}>
+              <List.Item.Meta title={category}/>
+              <div>{`Current Score: ${score} `}</div>
+            </List.Item>
+          )}}
+        />
+      }
+    }
 
-          return (
-                <List.Item
-                    actions={[<Link to={`/quizzes/${quizId}/questions/${answered}`}>Continue</Link>, <a icon="delete" onClick={()=>this.delete(quizId)}>Delete</a>]}>
-                  <List.Item.Meta
-                    title={category}
-                  />
-                  {`Score: ${score*100}/${totalQuestions}`}
-                </List.Item>
-          )
-        }}
-      />
-    );
-  }
-}
 
 export default Quizes;
