@@ -43,7 +43,7 @@ class Quiz extends Component {
     const lastQuestion = this.state.questions.length - 1;
     const quiz = this.state.questions[currentQuestion]
     const title = quiz.question;
-    const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer));
+    const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer)).sort(([a], [b]) => a > b);
     const answer = quiz.correct_answer;
     const answered = this.state.questions.filter((question) => question.choice).length;
 
