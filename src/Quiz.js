@@ -18,20 +18,25 @@ class Quiz extends Component {
   }
 
   check = (choice, answer) => {
-    const { id, quizId } = this.props.match.params;
+    const { id } = this.props.match.params;
     const currentQuest = this.state.questions[Number(id)];
-    currentQuest.choice = choice;
-    this.setState({ questions: this.state.questions}, (() => {
-      const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
-      quizes[quizId] = this.state.questions;
-
-      window.localStorage.setItem("quizes", JSON.stringify(quizes));
-    }));
+    currentQuest.choice === choice && this.update(currentQuest, choice)
   }
+
+   update = (currentQuest, choice) =>{
+     const { quizId } = this.props.match.params;
+     currentQuest.choice = choice;
+     this.setState({ questions: this.state.questions}, (() => {
+       const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
+       quizes[quizId] = this.state.questions;
+       window.localStorage.setItem("quizes", JSON.stringify(quizes));
+     }));
+   }
 
   onFetchQuestions = (data) => {
     this.setState({questions: data.results});
   }
+  
   render(){
     const { match } = this.props;
     const quizId = match.params.quizId;
