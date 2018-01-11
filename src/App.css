@@ -1,3 +1,7 @@
+body {
+  background: #f0f2f5;
+}
+
 .App {
   text-align: center;
 }
@@ -27,4 +31,10 @@
 
 .card {
 
+ }
+ .correct {
+   color: green;
+ }
+ .incorrect {
+   color: red;
  }

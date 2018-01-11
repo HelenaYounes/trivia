@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, message, Progress, Radio} from 'antd';
+import { Button, Card, Progress, Radio} from 'antd';
 import shuffle from 'shuffle-array';
 import InnerHTML from 'dangerously-set-inner-html';
 
 const RadioGroup = Radio.Group;
-const radioStyle = Radio.Style;
 
 class Quiz extends Component {
   constructor(props){
@@ -28,8 +27,6 @@ class Quiz extends Component {
       quizes[quizId] = this.state.questions;
 
       window.localStorage.setItem("quizes", JSON.stringify(quizes));
-      message.success(`correct answer: ${answer}`, 2)
-
     }));
   }
 
@@ -49,9 +46,12 @@ class Quiz extends Component {
     const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer));
     const answer = quiz.correct_answer;
     const answered = this.state.questions.filter((question) => question.choice).length;
-    return (
+
+    return(
+      <div>
+        <Progress percent={(answered / this.state.questions.length)*100} />
+
       <div className='quiz-content'>
-          <Progress percent={(answered / this.state.questions.length)*100} />
         <Card
             className='quiz-card'
             match={match}
@@ -59,15 +59,15 @@ class Quiz extends Component {
           >
             <RadioGroup>
               {choices.map((choice, i) => {
-                return <Radio style={radioStyle} key={i} value={choice} onClick={()=>this.check(choice, answer)}>
-                    <InnerHTML html={choice}/>
-                    {quiz.choice === choice && <Progress type="circle" percent={100} width={15} status={(quiz.choice === quiz.correct_answer)?"success":"exception"}/>
-                    }
+
+                return <Radio className ={(choice === quiz.choice) && ((quiz.choice === answer)? "correct":"incorrect")}  key={i} value={choice} onClick={()=>this.check(choice, answer)}>
+                      <InnerHTML html={choice}/>
                   </Radio>
                 })
               }
             </RadioGroup>
           </Card>
+        </div>
         <div className='switch-question-buttons'>
           {prevQuestion >= 0 && (
             <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
@@ -80,7 +80,7 @@ class Quiz extends Component {
             </Link>)
           }
         </div>
-      </div>
+    </div>
     )
   }
 }

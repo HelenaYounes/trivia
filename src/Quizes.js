@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CreateQuiz from './CreateQuiz.js'
 import { Link } from 'react-router-dom';
 import { List } from 'antd';
 import { toPairs } from 'ramda';
@@ -21,9 +20,9 @@ class Quizes extends Component {
     })
   }
   render(){
-
     const quizes = this.state.quizes;
-    const list = toPairs(quizes);
+    const quizess = toPairs(quizes);
+    const list = toPairs(quizes).sort(([a], [b]) => a > b);
     return <List
         className="demo-loadmore-list"
         itemLayout="horizontal"
@@ -32,8 +31,7 @@ class Quizes extends Component {
           const question = questions[0];
           const totalQuestions = questions.length;
           const category = question.category;
-          const answered = questions.filter(question => question.choice).length;
-          const score = questions.filter(question => question.choice === question.correct_answer).length / answered;
+          const score = questions.filter(question => question.choice === question.correct_answer).length;
           return (<List.Item actions={[
             <Link to={`/quizzes/${quizId}/questions/${0}`}>
               Continue
@@ -42,7 +40,7 @@ class Quizes extends Component {
               Delete
             </a>]}>
               <List.Item.Meta title={category}/>
-              <div>{`Current Score: ${score} `}</div>
+              <div>{`Current Score: ${(score)}/${totalQuestions} `}</div>
             </List.Item>
           )}}
         />
