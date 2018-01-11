@@ -5,6 +5,8 @@
   "dependencies": {
     "ant-design": "^1.0.0",
     "antd": "^3.0.0",
+    "classnames": "^2.2.5",
+    "cx": "^18.1.14",
     "dangerously-set-inner-html": "^2.0.1",
     "ramda": "^0.25.0",
     "react": "^16.1.1",

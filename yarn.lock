@@ -1818,6 +1818,13 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+cx@^18.1.14:
+  version "18.1.14"
+  resolved "https://registry.yarnpkg.com/cx/-/cx-18.1.14.tgz#2635e7d2dc435cbf4a1a44d6fabf5ddcd899f9bc"
+  dependencies:
+    intl-io "^0.2.8"
+    route-parser "^0.0.5"
+
 d@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
@@ -3323,6 +3330,10 @@ internal-ip@1.2.0:
 interpret@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.4.tgz#820cdd588b868ffb191a809506d6c9c8f212b1b0"
+
+intl-io@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/intl-io/-/intl-io-0.2.8.tgz#d088eb9060c1a79c9b66e1215c4c1faa3484cc18"
 
 invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
@@ -6116,6 +6127,10 @@ rmc-feedback@^1.0.0:
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
+
+route-parser@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/route-parser/-/route-parser-0.0.5.tgz#7d1d09d335e49094031ea16991a4a79b01bbe1f4"
 
 run-async@^2.2.0:
   version "2.3.0"

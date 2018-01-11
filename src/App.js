@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Layout, Row, Col } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import Quiz from './Quiz.js';
 import CreateQuiz from './CreateQuiz.js';
@@ -13,15 +13,18 @@ class App extends Component {
     return (
       <Layout>
         <Header>
-          <div className='App-header'>
-            <Icon type="bars" style={{fontSize: 20, color:'white'}}/>
-            <Link to='/'><h1 className="App-title" style={{color:'white'}}>Trivia</h1></Link>
-            <CreateQuiz history={this.props.history}/>
-          </div>
+          <Row>
+            <Col span={12}>
+              <Link to='/'><h1 className="App-title" style={{color:'white'}}>Trivia</h1></Link>
+            </Col>
+            <Col offset={8} span={4}>
+              <CreateQuiz history={this.props.history}/>
+            </Col>
+          </Row>
         </Header>
         <Content>
           <Row>
-            <Col span={18} offset={4}>
+            <Col span={18} offset={3}>
               <Switch>
                 <Route path='/quizzes/:quizId/questions/:id' component={Quiz} />
                 <Route path='/' component={Quizes} />

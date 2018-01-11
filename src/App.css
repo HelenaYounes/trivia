@@ -2,39 +2,22 @@ body {
   background: #f0f2f5;
 }
 
-.App {
+.ant-card{
+  margin-bottom: 17px;
   text-align: center;
 }
 
+.ant-card .incorrect * {
+  color: red;
+}
 
-.App-header {
-  display: flex;
+.ant-card .correct * {
+  color: green;
+}
+
+.ant-list-item {
   justify-content: space-between;
-  align-items: center;
 }
-.ant-card-head-title {
-}
-
-
-.App-intro {
-  font-size: large;
-}
-
-.ant-list-item-content{
-  justify-content: center
-}
-
-.create-quiz-button {
-  display: flex;
-  align-items: center;
-}
-
-.card {
-
- }
- .correct {
-   color: green;
- }
- .incorrect {
-   color: red;
- }
+/* .ant-card-actions > li  {
+  color: red ;
+} */

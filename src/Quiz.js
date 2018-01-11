@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Progress, Radio} from 'antd';
-import shuffle from 'shuffle-array';
-import InnerHTML from 'dangerously-set-inner-html';
+import { Button, Card, Icon} from 'antd';
+import cx from 'classnames';
 
-const RadioGroup = Radio.Group;
+const Meta = Card.Meta;
 
 class Quiz extends Component {
   constructor(props){
@@ -33,7 +32,6 @@ class Quiz extends Component {
   onFetchQuestions = (data) => {
     this.setState({questions: data.results});
   }
-
   render(){
     const { match } = this.props;
     const quizId = match.params.quizId;
@@ -43,44 +41,49 @@ class Quiz extends Component {
     const lastQuestion = this.state.questions.length - 1;
     const quiz = this.state.questions[currentQuestion]
     const title = quiz.question;
-    const choices = shuffle(quiz.incorrect_answers.concat(quiz.correct_answer)).sort(([a], [b]) => a > b);
+    const choices = quiz.incorrect_answers.concat(quiz.correct_answer).sort(([a], [b]) => a > b);
     const answer = quiz.correct_answer;
-    const answered = this.state.questions.filter((question) => question.choice).length;
+    const correct = this.state.questions.filter((question) => (question.choice === answer)).length;
+    const hasChoice = quiz.choice;
 
     return(
       <div>
-        <Progress percent={(answered / this.state.questions.length)*100} />
-
-      <div className='quiz-content'>
+        <div className="score">{`${correct}/${this.state.questions.length}`}</div>
         <Card
-            className='quiz-card'
-            match={match}
-            title={<InnerHTML html={title}/>}
-          >
-            <RadioGroup>
-              {choices.map((choice, i) => {
-
-                return <Radio className ={(choice === quiz.choice) && ((quiz.choice === answer)? "correct":"incorrect")}  key={i} value={choice} onClick={()=>this.check(choice, answer)}>
-                      <InnerHTML html={choice}/>
-                  </Radio>
-                })
-              }
-            </RadioGroup>
-          </Card>
-        </div>
-        <div className='switch-question-buttons'>
-          {prevQuestion >= 0 && (
+          title={<h2 dangerouslySetInnerHTML={{__html: title }} />}
+          actions={[
             <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
-              <Button icon='step-backward'/>
-            </Link>)
-          }
-          {nextQuestion <= lastQuestion && (
-            <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
-              <Button icon='step-forward'/>
-            </Link>)
-          }
-        </div>
-    </div>
+             {prevQuestion >= 0 && ( <Button icon='step-backward'/>)}
+            </Link>, <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
+              {nextQuestion <= lastQuestion && (<Button icon='step-forward'/>)}
+            </Link>
+          ]}
+        >
+          {choices.map((choice, i) => {
+            const showCorrect = (hasChoice && choice === answer);
+
+            return (
+              <a key={i}
+                onClick={()=>this.check(choice, answer)}
+              >
+                <Card
+                  hoverable
+                  className={cx({ correct: showCorrect, incorrect: hasChoice && (quiz.choice===choice) })}
+                >
+                  <Meta
+                    avatar={(showCorrect && <Icon type="check"/>)}
+                    title={(
+                      <h3>
+                        <div dangerouslySetInnerHTML={{__html: choice }} />
+                      </h3>
+                    )}
+                  />
+                </Card>
+              </a>
+            )
+          })}
+        </Card>
+      </div>
     )
   }
 }
