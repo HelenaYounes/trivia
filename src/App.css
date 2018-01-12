@@ -1,9 +1,36 @@
 body {
   background: #f0f2f5;
 }
+.score {
+  margin: 20px 0;
+  text-align: center;
+}
 
 .ant-card{
   margin-bottom: 17px;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 18px;
+  display: inline-block;
+  margin: 0 10px 0 0;
+  background: white;
+}
+
+.dot.correct {
+  background: #1890ff;
+}
+
+.dot.incorrect {
+  background: #d4d3d3;
+}
+
+.dot.current {
+  height:24px;
+  width:24px;
+  border-radius: 24px;
 }
 
 .ant-card .incorrect * {
