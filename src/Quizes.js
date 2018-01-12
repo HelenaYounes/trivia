@@ -30,26 +30,19 @@ class Quizes extends Component {
         const question = questions[0];
         const totalQuestions = questions.length;
         const category = question.category;
-        const answered = questions.filter(question => question.choice).length;
+        const answeredQuestions = questions.filter(question => question.choice).length;
+        const currentQuest = answeredQuestions === 0? 0:(answeredQuestions-1);
         const score = questions.filter(question => question.choice === question.correct_answer).length;
-        return (
-          <List.Item
-            actions={[
-              <Link to={`/quizzes/${quizId}/questions/${answered-1}`}>
-                Continue
-              </Link>,
-              <a icon="delete" onClick={()=>this.delete(quizId)}>
-                Delete
-              </a>]}
-          >
+        return (<List.Item actions={[<a icon="delete" onClick={()=>this.delete(quizId)}>Delete</a>]}>
+          <Link to={`/quizzes/${quizId}/questions/${answeredQuestions}`}>
             <List.Item.Meta
               title={category}
               avatar={<Progress
-                width={40} type="circle" percent={score} format={percent => `${percent}/${totalQuestions}`}
+                width={40} type="circle" percent={(answeredQuestions/totalQuestions)*100} format={percent => `${answeredQuestions}`}
               />}
             />
-          </List.Item>
-        )
+          </Link>
+        </List.Item>)
       }}
     />
   }

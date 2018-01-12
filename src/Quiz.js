@@ -18,7 +18,7 @@ class Quiz extends Component {
   }
 
   check = (choice, answer) => {
-    debugger
+
     const { id } = this.props.match.params;
     const currentQuest = this.state.questions[Number(id)];
     (currentQuest.choice)? alert('answered'):this.update(currentQuest, choice)
@@ -56,7 +56,6 @@ class Quiz extends Component {
       <div>
         <div className="score">{`${correct}/${this.state.questions.length}`}</div>
         <Card
-          title={<h2 dangerouslySetInnerHTML={{__html: title }} />}
           actions={[
             <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
              {prevQuestion >= 0 && ( <Button icon='step-backward'/>)}
@@ -65,6 +64,7 @@ class Quiz extends Component {
             </Link>
           ]}
         >
+          <h2 dangerouslySetInnerHTML={{__html: title }} />
           {choices.map((choice, i) => {
             const showCorrect = (hasChoice && choice === answer);
 
