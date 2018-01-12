@@ -34,17 +34,6 @@ class Quiz extends Component {
      }));
    }
 
-  onFetchQuestions = () => {
-    const { quizId } = this.props.match.params;
-    const quizes = JSON.parse(window.localStorage.getItem("quizes"));
-    const questions = quizes[quizId];
-    this.setState({questions: questions});
-  }
-
-  componentDidUpdate() {
-    this.onFetchQuestions;
-  }
-
   render(){
     const { match } = this.props;
     const quizId = match.params.quizId;
@@ -68,6 +57,8 @@ class Quiz extends Component {
               <div key={i} className={cx("dot", {current: currentQuestion === i, incorrect: (question.choice && question.choice !== question.correct_answer), correct: question.correct_answer === question.choice})} />
             </Link>
           })}
+          <div>{`Current Score: ${this.state.questions.filter(question=> (question.choice &&
+            question.choice === question.correct_answer)).length}/${this.state.questions.length}`}</div>
         </div>
         <Card
           actions={[

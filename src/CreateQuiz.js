@@ -74,12 +74,11 @@ class CreateQuiz extends Component {
   onFetchQuestions = (data) => {
     const quizId = uuid.v4();
     const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
-
     quizes[quizId] = data.results;
-    this.setState({ visible: false }, () => {
-      window.localStorage.setItem("quizes", JSON.stringify(quizes));
-      this.props.history.push(`/quizzes/${quizId}/questions/0`);
-    })
+    window.localStorage.setItem("quizes", JSON.stringify(quizes));
+    this.props.history.push(`/quizzes/${quizId}/questions/0`);
+    this.setState({ visible: false })
+
   }
 
   handleCreate = () => {
