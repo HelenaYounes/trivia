@@ -18,9 +18,10 @@ class Quiz extends Component {
   }
 
   check = (choice, answer) => {
+    debugger
     const { id } = this.props.match.params;
     const currentQuest = this.state.questions[Number(id)];
-    currentQuest.choice === choice && this.update(currentQuest, choice)
+    (currentQuest.choice)? alert('answered'):this.update(currentQuest, choice)
   }
 
    update = (currentQuest, choice) =>{
@@ -36,7 +37,7 @@ class Quiz extends Component {
   onFetchQuestions = (data) => {
     this.setState({questions: data.results});
   }
-  
+
   render(){
     const { match } = this.props;
     const quizId = match.params.quizId;
