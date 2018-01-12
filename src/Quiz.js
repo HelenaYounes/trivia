@@ -56,7 +56,9 @@ class Quiz extends Component {
       <div>
         <div className="score">
           {this.state.questions.map((question, i) => {
-            return <div key={i} className={cx("dot", {current: currentQuestion === i, incorrect: (question.choice && question.choice !== question.correct_answer), correct: question.correct_answer === question.choice})} />
+            return <Link to={`/quizzes/${quizId}/questions/${i}`}>
+              <div key={i} className={cx("dot", {current: currentQuestion === i, incorrect: (question.choice && question.choice !== question.correct_answer), correct: question.correct_answer === question.choice})} />
+            </Link>
           })}
         </div>
         <Card
