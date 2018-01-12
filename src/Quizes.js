@@ -31,7 +31,6 @@ class Quizes extends Component {
         const totalQuestions = questions.length;
         const category = question.category;
         const answeredQuestions = questions.filter(question => question.choice).length;
-        const currentQuest = answeredQuestions === 0? 0:(answeredQuestions-1);
         const score = questions.filter(question => question.choice === question.correct_answer).length;
         return (<List.Item actions={[<a icon="delete" onClick={()=>this.delete(quizId)}>Delete</a>]}>
           <Link to={`/quizzes/${quizId}/questions/${answeredQuestions}`}>

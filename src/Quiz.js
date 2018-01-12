@@ -34,8 +34,15 @@ class Quiz extends Component {
      }));
    }
 
-  onFetchQuestions = (data) => {
-    this.setState({questions: data.results});
+  onFetchQuestions = () => {
+    const { quizId } = this.props.match.params;
+    const quizes = JSON.parse(window.localStorage.getItem("quizes"));
+    const questions = quizes[quizId];
+    this.setState({questions: questions});
+  }
+
+  componentDidUpdate() {
+    this.onFetchQuestions;
   }
 
   render(){
@@ -45,7 +52,7 @@ class Quiz extends Component {
     const prevQuestion = currentQuestion - 1;
     const nextQuestion = currentQuestion + 1;
     const lastQuestion = this.state.questions.length - 1;
-    const quiz = this.state.questions[currentQuestion]
+    const quiz = this.state.questions[currentQuestion];
     const title = quiz.question;
     const choices = quiz.incorrect_answers.concat(quiz.correct_answer).sort(([a], [b]) => a > b);
     const answer = quiz.correct_answer;
@@ -54,9 +61,10 @@ class Quiz extends Component {
 
     return(
       <div>
+
         <div className="score">
           {this.state.questions.map((question, i) => {
-            return <Link to={`/quizzes/${quizId}/questions/${i}`}>
+            return <Link key={i} to={`/quizzes/${quizId}/questions/${i}`}>
               <div key={i} className={cx("dot", {current: currentQuestion === i, incorrect: (question.choice && question.choice !== question.correct_answer), correct: question.correct_answer === question.choice})} />
             </Link>
           })}
