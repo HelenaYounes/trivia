@@ -19,21 +19,31 @@ class Quiz extends Component {
 
   check = (choice, answer) => {
     const { id, quizId } = this.props.match.params;
-    const questions = this.getQuestions(quizId);
+    const quizes = this.getQuizes();
+    const questions = quizes[quizId];
     const currentQuest = questions[Number(id)];
-    currentQuest.choice
-      ? alert('answered')
-      : this.update(currentQuest, choice)
+
+    if (currentQuest.choice) {
+      return;
+    }
+
+    currentQuest.choice = choice;
+
+    quizes[quizId] = questions;
+
+    window.localStorage.setItem("quizes", JSON.stringify(quizes));
+    this.setState({ questions: questions });
   }
 
-   update = (currentQuest, choice) => {
-     const { quizId } = this.props.match.params;
-     const quizes = this.getQuizes();
-     const questions = this.getQuestions(quizId);
-     currentQuest.choice = choice;
-     quizes[quizId] = questions;
-     window.localStorage.setItem("quizes", JSON.stringify(quizes));
-   }
+   // update = (currentQuest, choice) => {
+   //   const { quizId } = this.props.match.params;
+   //   const quizes = this.getQuizes();
+   //   const questions = this.getQuestions(quizId);
+   //   currentQuest.choice = choice;
+   //   quizes[quizId] = questions;
+   //   window.localStorage.setItem("quizes", JSON.stringify(quizes));
+   //   this.setState({ questions: questions})
+   // }
 
    getQuizes = () => JSON.parse(window.localStorage.getItem("quizes")) || {};
 
