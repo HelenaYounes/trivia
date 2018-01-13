@@ -76,7 +76,7 @@ class CreateQuiz extends Component {
     const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
     quizes[quizId] = data.results;
     window.localStorage.setItem("quizes", JSON.stringify(quizes));
-    this.props.history.push(`/quizzes/${quizId}/questions/0`);
+    this.props.history.push(`/quizes/${quizId}/questions/0`);
     this.setState({ visible: false })
 
   }

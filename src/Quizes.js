@@ -33,7 +33,7 @@ class Quizes extends Component {
         const answeredQuestions = questions.filter(question => question.choice).length;
         const score = questions.filter(question => question.choice === question.correct_answer).length;
         return (<List.Item actions={[<a icon="delete" onClick={()=>this.delete(quizId)}>Delete</a>]}>
-          <Link to={`/quizzes/${quizId}/questions/${answeredQuestions}`}>
+          <Link to={`/quizes/${quizId}/questions/${answeredQuestions}`}>
             <List.Item.Meta
               title={category}
               avatar={<Progress

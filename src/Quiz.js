@@ -18,53 +18,62 @@ class Quiz extends Component {
   }
 
   check = (choice, answer) => {
-
-    const { id } = this.props.match.params;
-    const currentQuest = this.state.questions[Number(id)];
-    (currentQuest.choice)? alert('answered'):this.update(currentQuest, choice)
+    const { id, quizId } = this.props.match.params;
+    const questions = this.getQuestions(quizId);
+    const currentQuest = questions[Number(id)];
+    currentQuest.choice
+      ? alert('answered')
+      : this.update(currentQuest, choice)
   }
 
-   update = (currentQuest, choice) =>{
+   update = (currentQuest, choice) => {
      const { quizId } = this.props.match.params;
+     const quizes = this.getQuizes();
+     const questions = this.getQuestions(quizId);
      currentQuest.choice = choice;
-     this.setState({ questions: this.state.questions}, (() => {
-       const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
-       quizes[quizId] = this.state.questions;
-       window.localStorage.setItem("quizes", JSON.stringify(quizes));
-     }));
+     quizes[quizId] = questions;
+     window.localStorage.setItem("quizes", JSON.stringify(quizes));
+   }
+
+   getQuizes = () => JSON.parse(window.localStorage.getItem("quizes")) || {};
+
+   getQuestions = (quizId) => {
+     const quizes = this.getQuizes();
+     return quizes[quizId];
    }
 
   render(){
     const { match } = this.props;
     const quizId = match.params.quizId;
+    const questions = this.getQuestions(quizId);
     const currentQuestion = Number(match.params.id);
     const prevQuestion = currentQuestion - 1;
     const nextQuestion = currentQuestion + 1;
-    const lastQuestion = this.state.questions.length - 1;
-    const quiz = this.state.questions[currentQuestion];
+    const lastQuestion = questions.length - 1;
+    const quiz = questions[currentQuestion];
     const title = quiz.question;
     const choices = quiz.incorrect_answers.concat(quiz.correct_answer).sort(([a], [b]) => a > b);
     const answer = quiz.correct_answer;
-    const correct = this.state.questions.filter((question) => (question.choice === answer)).length;
+    const correct = questions.filter((question) => (question.choice === answer)).length;
     const hasChoice = quiz.choice;
 
     return(
       <div>
 
         <div className="score">
-          {this.state.questions.map((question, i) => {
-            return <Link key={i} to={`/quizzes/${quizId}/questions/${i}`}>
+          {questions.map((question, i) => {
+            return <Link key={i} to={`/quizes/${quizId}/questions/${i}`}>
               <div key={i} className={cx("dot", {current: currentQuestion === i, incorrect: (question.choice && question.choice !== question.correct_answer), correct: question.correct_answer === question.choice})} />
             </Link>
           })}
-          <div>{`Current Score: ${this.state.questions.filter(question=> (question.choice &&
-            question.choice === question.correct_answer)).length}/${this.state.questions.length}`}</div>
+          <div>{`Current Score: ${questions.filter(question=> (question.choice &&
+            question.choice === question.correct_answer)).length}/${questions.length}`}</div>
         </div>
         <Card
           actions={[
-            <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
+            <Link to={`/quizes/${quizId}/questions/${prevQuestion}`}>
              {prevQuestion >= 0 && ( <Button icon='step-backward'/>)}
-            </Link>, <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
+            </Link>, <Link to={`/quizes/${quizId}/questions/${nextQuestion}`}>
               {nextQuestion <= lastQuestion && (<Button icon='step-forward'/>)}
             </Link>
           ]}

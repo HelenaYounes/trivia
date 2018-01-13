@@ -26,7 +26,7 @@ class App extends Component {
           <Row>
             <Col span={18} offset={3}>
               <Switch>
-                <Route path='/quizzes/:quizId/questions/:id' component={Quiz} />
+                <Route path='/quizes/:quizId/questions/:id' component={Quiz} />
                 <Route path='/' component={Quizes} />
               </Switch>
             </Col>
