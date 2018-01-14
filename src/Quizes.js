@@ -40,6 +40,11 @@ class Quizes extends Component {
                 width={40} type="circle" percent={(answeredQuestions/totalQuestions)*100} format={percent => `${answeredQuestions}`}
               />}
             />
+            <List.Item>
+            <List.Item.Meta
+              title={`Score:${score}/${totalQuestions} Finish quiz`}
+            />
+          </List.Item>
           </Link>
         </List.Item>)
       }}

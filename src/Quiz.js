@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Icon} from 'antd';
+import { Alert, Button, Card, Icon} from 'antd';
 import cx from 'classnames';
 
 const Meta = Card.Meta;
@@ -64,21 +64,32 @@ class Quiz extends Component {
     const title = quiz.question;
     const choices = quiz.incorrect_answers.concat(quiz.correct_answer).sort(([a], [b]) => a > b);
     const answer = quiz.correct_answer;
-    const correct = questions.filter((question) => (question.choice === answer)).length;
     const hasChoice = quiz.choice;
-
+    const totalQuestions = questions.length;
+    const score = questions.filter(question=> (question.choice && question.choice === question.correct_answer)).length
     return(
       <div>
 
         <div className="score">
           {questions.map((question, i) => {
             return <Link key={i} to={`/quizes/${quizId}/questions/${i}`}>
-              <div key={i} className={cx("dot", {current: currentQuestion === i, incorrect: (question.choice && question.choice !== question.correct_answer), correct: question.correct_answer === question.choice})} />
+              <div
+                key={i}
+                className={cx(
+                  "dot",
+                  {
+                    current: currentQuestion === i,
+                    incorrect: (question.choice && question.choice !== question.correct_answer),
+                    correct: question.correct_answer === question.choice
+                  }
+                )}
+              />
             </Link>
           })}
-          <div>{`Current Score: ${questions.filter(question=> (question.choice &&
-            question.choice === question.correct_answer)).length}/${questions.length}`}</div>
+          <div>{`Score: ${score} / ${totalQuestions}`}</div>
         </div>
+        { questions.filter(question=> (question.choice)).length === totalQuestions && <Alert message={`You have completed the quiz, your score: ${questions.filter(question=> (question.choice &&
+          question.choice === question.correct_answer)).length}/${questions.length}`} type="success" />}
         <Card
           actions={[
             <Link to={`/quizes/${quizId}/questions/${prevQuestion}`}>
@@ -88,7 +99,7 @@ class Quiz extends Component {
             </Link>
           ]}
         >
-          <h2 dangerouslySetInnerHTML={{__html: title }} />
+          <h2 dangerouslySetInnerHTML={{__html: `${currentQuestion + 1}. ${title}` }} />
           {choices.map((choice, i) => {
             const showCorrect = (hasChoice && choice === answer);
 
@@ -97,7 +108,7 @@ class Quiz extends Component {
                 onClick={()=>this.check(choice, answer)}
               >
                 <Card
-                  hoverable
+                  hoverable={!hasChoice}
                   className={cx({ correct: showCorrect, incorrect: hasChoice && (quiz.choice===choice) })}
                 >
                   <Meta

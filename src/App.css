@@ -6,8 +6,16 @@ body {
   text-align: center;
 }
 
-.ant-card{
+.ant-card {
   margin-bottom: 17px;
+}
+
+.ant-card.incorrect * {
+  color: #ef5350;
+}
+
+.ant-card.correct * {
+  color: #1890ff;
 }
 
 .dot {
@@ -19,31 +27,20 @@ body {
   background: white;
 }
 
-.dot.correct {
-  background: #1890ff;
-}
-
-.dot.incorrect {
-  background: #d4d3d3;
-}
-
 .dot.current {
   height:24px;
   width:24px;
   border-radius: 24px;
 }
 
-.ant-card .incorrect * {
-  color: red;
+.dot.correct {
+  background: #1890ff;
 }
 
-.ant-card .correct * {
-  color: green;
+.dot.incorrect {
+  background: #ef5350;
 }
 
 .ant-list-item {
   justify-content: space-between;
 }
-/* .ant-card-actions > li  {
-  color: red ;
-} */
