@@ -1,101 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Icon} from 'antd';
-import cx from 'classnames';
+import { Card, List, Progress } from 'antd';
+import { toPairs } from 'ramda';
 
-const Meta = Card.Meta;
-
-class Quiz extends Component {
-  constructor(props){
-    const { quizId } = props.match.params;
-    const quizes = JSON.parse(window.localStorage.getItem("quizes"));
-    const questions = quizes[quizId];
-
-    super()
-    this.state = {
-      questions,
-    }
-  }
-
-  check = (choice, answer) => {
-
-    const { id } = this.props.match.params;
-    const currentQuest = this.state.questions[Number(id)];
-    (currentQuest.choice)? alert('answered'):this.update(currentQuest, choice)
-  }
-
-   update = (currentQuest, choice) =>{
-     const { quizId } = this.props.match.params;
-     currentQuest.choice = choice;
-     this.setState({ questions: this.state.questions}, (() => {
-       const quizes = JSON.parse(window.localStorage.getItem("quizes")) || {};
-       quizes[quizId] = this.state.questions;
-       window.localStorage.setItem("quizes", JSON.stringify(quizes));
-     }));
+const Quiz = (props) =>{
+    return <List
+       className="demo-loadmore-list"
+       itemLayout="horizontal"
+       dataSource={props.quizes}
+       renderItem={([quizId, questions]) => {
+         const question = questions[0];
+         const totalQuestions = questions.length;
+         const category = question.category;
+         const answeredQuestions = questions.filter(question => question.choice).length;
+         const quizComplete = (answeredQuestions === totalQuestions);
+         const score = questions.filter(question => question.choice === question.correct_answer).length;
+         return (<List.Item actions={[<a icon="delete" onClick={()=>props.onDelete(quizId)}>Delete</a>]}>
+           <Link to={`/quizes/${quizId}/questions/${answeredQuestions}`}>
+             <List.Item.Meta
+               title={category}
+               description={`Score:${score}/${totalQuestions} Finish quiz`}
+               avatar={<Progress
+                 width={40} type="circle" percent={(answeredQuestions/totalQuestions)*100} format={percent => `${answeredQuestions}`}
+               />}
+             />
+             <List.Item>
+             <List.Item.Meta
+               title={`Score:${score}/${totalQuestions} Finish quiz`}
+             />
+            </List.Item>
+           </Link>
+         </List.Item>)
+       }}
+     />
    }
-
-  onFetchQuestions = (data) => {
-    this.setState({questions: data.results});
-  }
-
-  render(){
-    const { match } = this.props;
-    const quizId = match.params.quizId;
-    const currentQuestion = Number(match.params.id);
-    const prevQuestion = currentQuestion - 1;
-    const nextQuestion = currentQuestion + 1;
-    const lastQuestion = this.state.questions.length - 1;
-    const quiz = this.state.questions[currentQuestion]
-    const title = quiz.question;
-    const choices = quiz.incorrect_answers.concat(quiz.correct_answer).sort(([a], [b]) => a > b);
-    const answer = quiz.correct_answer;
-    const correct = this.state.questions.filter((question) => (question.choice === answer)).length;
-    const hasChoice = quiz.choice;
-
-    return(
-      <div>
-        <div className="score">
-          {this.state.questions.map((question, i) => {
-            return <div key={i} className={cx("dot", {current: currentQuestion === i, incorrect: (question.choice && question.choice !== question.correct_answer), correct: question.correct_answer === question.choice})} />
-          })}
-        </div>
-        <Card
-          actions={[
-            <Link to={`/quizzes/${quizId}/questions/${prevQuestion}`}>
-             {prevQuestion >= 0 && ( <Button icon='step-backward'/>)}
-            </Link>, <Link to={`/quizzes/${quizId}/questions/${nextQuestion}`}>
-              {nextQuestion <= lastQuestion && (<Button icon='step-forward'/>)}
-            </Link>
-          ]}
-        >
-          <h2 dangerouslySetInnerHTML={{__html: title }} />
-          {choices.map((choice, i) => {
-            const showCorrect = (hasChoice && choice === answer);
-
-            return (
-              <a key={i}
-                onClick={()=>this.check(choice, answer)}
-              >
-                <Card
-                  hoverable
-                  className={cx({ correct: showCorrect, incorrect: hasChoice && (quiz.choice===choice) })}
-                >
-                  <Meta
-                    avatar={(showCorrect && <Icon type="check"/>)}
-                    title={(
-                      <h3>
-                        <div dangerouslySetInnerHTML={{__html: choice }} />
-                      </h3>
-                    )}
-                  />
-                </Card>
-              </a>
-            )
-          })}
-        </Card>
-      </div>
-    )
-  }
-}
 
 export default Quiz;
