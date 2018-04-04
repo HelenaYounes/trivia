@@ -9,7 +9,9 @@ body {
 .ant-card {
   margin-bottom: 17px;
 }
-
+.ant-card-bordered {
+    border: 0;
+}
 .ant-card.incorrect * {
   color: #ef5350;
 }

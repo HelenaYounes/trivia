@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Layout, Row, Col } from 'antd';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
-import Quiz from './Quiz.js';
+import Question from './Question.js';
 import CreateQuiz from './CreateQuiz.js';
-import Quizes from './Quizes.js';
+import Home from './Home.js';
 import 'antd/dist/antd.css';
 import './App.css';
 const { Header, Content } = Layout;
@@ -26,8 +26,10 @@ class App extends Component {
           <Row>
             <Col span={18} offset={3}>
               <Switch>
-                <Route path='/quizes/:quizId/questions/:id' component={Quiz} />
-                <Route path='/' component={Quizes} />
+                <Route path='/quizes/:quizId/questions/:id' render={(props) => (
+                  <Question {...props}/>
+                )}/>
+                <Route path='/' component={Home} />
               </Switch>
             </Col>
           </Row>
