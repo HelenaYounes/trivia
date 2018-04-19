@@ -22,13 +22,9 @@ const Question = (props) => {
   const score = questions.filter(question=> (question.choice && question.choice === question.correct_answer)).length;
 
   const check = (choice, answer) => {
-    (currentQuestion.choice)? alert("You have already answered the question"):checkAnswer(choice, answer);
-    window.localStorage.setItem("quizes", JSON.stringify(quizes));
-  }
-
-  const checkAnswer = (choice, answer) => {
     currentQuestion.choice = choice;
-    choice === answer? alert("right answer"):alert(`wrong, correct answer: ${answer}`)
+    window.localStorage.setItem("quizes", JSON.stringify(quizes));
+    props.onAnswer();
   }
 
    return(
@@ -63,7 +59,7 @@ const Question = (props) => {
             </Link>
           ]}
         >
-          <h2 dangerouslySetInnerHTML={{__html: `${currentQuestion + 1}. ${title}` }} />
+          <h2 dangerouslySetInnerHTML={{__html: `${questionIndex + 1}. ${title}` }} />
           {choices.map((choice, i) => {
             const showCorrect = (hasChoice && choice === answer);
 

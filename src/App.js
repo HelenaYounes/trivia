@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Layout, Row, Col } from 'antd';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import Question from './Question.js';
@@ -9,6 +10,21 @@ import './App.css';
 const { Header, Content } = Layout;
 
 class App extends Component {
+  state = {
+    quizes: JSON.parse(window.localStorage.getItem('quizes')) || {}
+  }
+  deleteQuiz = (quizId) => {
+    const quizes = this.state.quizes ;
+    delete quizes[quizId];
+    this.setState({ quizes: quizes }, () => {
+      window.localStorage.setItem("quizes", JSON.stringify(this.state.quizes));
+    })
+  }
+
+  saveAnswer = () => {
+    const quizes = JSON.parse(window.localStorage.getItem('quizes'))
+    this.setState({ quizes: quizes });
+  }
   render() {
     return (
       <Layout>
@@ -27,9 +43,9 @@ class App extends Component {
             <Col span={18} offset={3}>
               <Switch>
                 <Route path='/quizes/:quizId/questions/:id' render={(props) => (
-                  <Question {...props}/>
+                  <Question {...props} onAnswer={this.saveAnswer}/>
                 )}/>
-                <Route path='/' component={Home} />
+                <Route path='/' render={(props) => <Home {...props} list={this.state.quizes} onDelete={this.deleteQuiz}/>} />
               </Switch>
             </Col>
           </Row>
@@ -39,6 +55,12 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = state => (
+  {
+    quizes: state
+  }
+);
+
 const routes = () => (
   <Router>
     <Route path="/" component={App} />
@@ -47,4 +69,4 @@ const routes = () => (
 
 
 
-export default routes;
+export default connect(mapStateToProps)(routes);

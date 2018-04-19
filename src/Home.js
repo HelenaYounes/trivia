@@ -1,25 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import QuizList from './QuizList';
 
-export default class Home extends Component {
-  constructor(props){
-    super()
-  }
-
-
-  state = {
-    quizes: JSON.parse(window.localStorage.getItem('quizes')) || {}
-  }
-  deleteQuiz = (quizId) => {
-    const quizes = this.state.quizes ;
-    delete quizes[quizId];
-    this.setState({ quizes: quizes }, () => {
-      window.localStorage.setItem("quizes", JSON.stringify(this.state.quizes));
-    })
-  }
- render(){
+const Home = (props) => {
    return (
-     <QuizList list={this.state.quizes} onDelete = {(quizId) => this.deleteQuiz(quizId)}/>
+     <QuizList list={props.list} onDelete = {(quizId) => props.onDelete(quizId)}/>
    );
  }
-}
+
+export default Home;

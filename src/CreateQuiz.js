@@ -50,7 +50,7 @@ class CreateQuiz extends Component {
   }
 
   render() {
-    const { form } = this.props;
+    const { form} = this.props;
     const { getFieldDecorator } = form;
 
     return (

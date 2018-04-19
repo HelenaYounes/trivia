@@ -6,12 +6,12 @@ import Quiz from './Quiz';
 
 
 const QuizList = (props) =>{
-    const quizes = props.list;
-    const list = toPairs(quizes)
-    // const listByCat = list.sort((a,b) => a[1][0].category > b[1][0].category);
-    const completedQuizes = list.filter((quiz) => quiz.isCompleted);
-    const inProgress = list.filter((quiz) => !quiz.isCompleted);
-    return <Card>
+  const quizes = props.list;
+  const list = toPairs(quizes)
+  // const listByCat = list.sort((a,b) => a[1][0].category > b[1][0].category);
+  const completedQuizes = list.filter((quiz) => quiz.isCompleted);
+  const inProgress = list.filter((quiz) => !quiz.isCompleted);
+  return <Card>
     <Card className ="inProgress" title="In Progress">
       <Quiz onDelete = {props.onDelete} quizes={inProgress}/>
     </Card>
